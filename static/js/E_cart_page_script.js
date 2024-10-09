@@ -62,10 +62,19 @@ function displayCart() {
 
     if (cart.length === 0) {
         container.innerHTML = ''
+        const palce_order_button = document.getElementById('placeorderbutton');
+        palce_order_button.style.backgroundColor='gray';
+        palce_order_button.style.cursor="default";
+        palce_order_button.disabled=true;
+        const subtotalp = document.querySelector('.style-430')
+        subtotalp.innerHTML=`$ 0`;
         return;
     }
     console.log(cart[0].resturant_name);
-    
+    const palce_order_button = document.getElementById('placeorderbutton');
+    palce_order_button.style.backgroundColor='rgb(144, 234, 147)';
+    palce_order_button.style.cursor="pointer";
+    palce_order_button.disabled=false;
     
     container.innerHTML = '';
     const itemscontainer = document.createElement('div')
@@ -143,7 +152,7 @@ function displayCart() {
         `
         container.appendChild(div);
         const subtotalp = document.querySelector('.style-430')
-        subtotalp.innerHTML=`$ ${SubTotal}`;
+        subtotalp.innerHTML=`$ ${SubTotal+2.90}`;
 }
 
 function palceorder(){
