@@ -1,0 +1,310 @@
+<html>
+
+<head>
+    <title>FoodHub</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/E_header_style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/E_style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/E_fotter_style.css') }}">
+
+    <!-- Firebase App (the core Firebase SDK) -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+
+    <!-- Firebase Authentication -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+
+    <!-- Firebase Firestore -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+</head>
+
+<body class="style-0"><noscript class="">You need to enable JavaScript to run this app.</noscript>
+    <div class="">
+        <div class="style-1">
+            {% include 'E_header.html' %}
+            
+            <div class="style-28">
+                
+            </div>
+            <div class="style-378">
+                <div class="style-379">
+                    <div class="style-380">
+                        <div class="style-381">
+                            <div class="style-382"></div>
+                            <div class="style-383">
+                                
+                                <div class="card-group">
+                                <div class="style-384">
+                                    <button  class="style-385" tabindex="0" type="button"><svg class="style-386" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="ArrowBackIcon">
+                                        <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20z" class=""></path>
+                                        </svg><span class="style-387"></span>                        
+                                    </button>
+        
+                                
+                                    <div class="style-1135"></div>
+                                    <h4 class="style-1136">Top Resturants</h4>
+                                
+                                    <div class="style-1137">
+                                        {% for category in categories %}
+                                        {% set indx = loop.index0 %}
+                                        
+                                     {% if category["pop"] == "true" %} 
+                                     <div class="style-1138">
+
+                                            {% if indx %2 != 0 %}
+                                        <div class="style-1139" style="background-color: rgb(144, 234, 147);">
+                                                {%else%}
+                                            <div class="style-1139" >
+                                                    {%endif%}
+                                                <button class="style-1140" tabindex="0" type="button" onclick="navigateToPage('{{category.id}}')">
+                                                    
+                                                    <div class="style-1141">
+                                                        <div class="style-1142">
+                                                            <div class="style-1143" style="background-image: url({{category.cat_image}});"></div>
+                                                            <div class="style-1144" >
+                                                                <p class="style-1145">20</p>
+                                                                <p class="style-1146"> MIN</p>
+                                                            </div>
+                                                            <div class="style-1147" ><svg class="style-1148" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="FavoriteBorderIcon">
+                                                                    <path d="M16.5 3c-1.74 0-3.41.81-4.5 2.09C10.91 3.81 9.24 3 7.5 3 4.42 3 2 5.42 2 8.5c0 3.78 3.4 6.86 8.55 11.54L12 21.35l1.45-1.32C18.6 15.36 22 12.28 22 8.5 22 5.42 19.58 3 16.5 3m-4.4 15.55-.1.1-.1-.1C7.14 14.24 4 11.39 4 8.5 4 6.5 5.5 5 7.5 5c1.54 0 3.04.99 3.57 2.36h1.87C13.46 5.99 14.96 5 16.5 5c2 0 3.5 1.5 3.5 3.5 0 2.89-3.14 5.74-7.9 10.05" class=""></path>
+                                                                </svg></div>
+                                                        </div>
+                                                        <div class="style-1149">
+                                                            {% if indx %2 != 0 %}
+                                                            <h6 class="style-1150" style="color: black ;">
+                                                                {%else%}
+                                                                <h6 class="style-1150">
+                                                                    {%endif%}
+                                                                {{category.name_en}}</h6>
+                                                            
+                                                            <div class="style-1151"><svg class="style-1152" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="StarSharpIcon">
+                                                                    <path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" class=""></path>
+                                                                </svg>
+                                                                {% if indx %2 != 0 %}
+                                                                <span class="style-1153" style="color:rgb(90, 88, 88);">3</span><span class="style-1154" style="color:rgb(90, 88, 88);">/5</span><span class="style-1155" style="color:rgb(90, 88, 88);">(6)</span></div>
+                                                                {%else%}
+                                                                <span class="style-1153" >3</span><span class="style-1154" >/5</span><span class="style-1155" >(6)</span></div>
+                                                                {%endif%}
+                                                            </div>
+                                                        <div class="style-1156">
+                                                            {% if indx %2 != 0 %}
+                                                            <span class="style-1157" style="color:rgb(90, 88, 88);">Burgers,Burritos,Fries,Beverages</span>
+                                                            {%else%}
+                                                            <span class="style-1157">Burgers,Burritos,Fries,Beverages</span>
+                                                            {%endif%}
+                                                            <div class="style-1158">
+                                                                <div class="style-1159">
+                                                                    {% if indx %2 != 0 %}
+                                                                    <h6 class="style-1160" style="color:rgb(90, 88, 88);">$ 0</h6>
+                                                                    <p class="style-1161" style="color:rgb(90, 88, 88);">Minimum</p>
+                                                                    {%else%}
+                                                                    <h6 class="style-1160">$ 0</h6>
+                                                                    <p class="style-1161">Minimum</p>
+                                                                    {%endif%}
+
+
+                                                                </div>
+                                                                <div class="style-1162">
+                                                                    <h6 class="style-1163"></h6><span class="style-1164"></span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div><span class="style-1165"></span><span class="style-1166"></span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        {%endif%}
+                                        {% endfor%}
+                                        
+                                        <button  class="style-594" tabindex="0" type="button"><svg class="style-595" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="ArrowForwardIcon">
+                                            <path d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z" class=""></path>
+                                        </svg><span class="style-596"></span></button>
+                                        
+                                        
+                                        
+                                    </div>
+                                </div>
+                                </div>
+                                
+                                
+                                
+                                
+                                
+                                {% for type in types %}
+                                <div class="card-group">
+                                <div class="style-384">
+                                    {% if type.resturants | length > 3 %}
+                                    
+                                    <button  class="style-385" tabindex="0" type="button"><svg class="style-386" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="ArrowBackIcon">
+                                    <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20z" class=""></path>
+                                </svg><span class="style-387"></span>
+                                
+                            </button>
+                            {% endif %}
+                                
+                                    <div class="style-1135"></div>
+                                    <h4 class="style-1136">{{type.en}}</h4>
+                                
+                                    <div class="style-1137">
+                                        {% for resturant in type.resturants %}
+                                        {% set indx = loop.index0 %} 
+                                      
+                                    <div class="style-1138">
+
+                                            {% if indx %2 != 0 %}
+                                        <div class="style-1139" style="background-color: rgb(144, 234, 147);">
+                                                {%else%}
+                                            <div class="style-1139" >
+                                                    {%endif%}
+                                                <button class="style-1140" tabindex="0" type="button" onclick="navigateToPage('{{resturant.id}}')">
+                                                    
+                                                    <div class="style-1141">
+                                                        <div class="style-1142">
+                                                            <div class="style-1143" style="background-image: url({{resturant.cat_image}});"></div>
+                                                            <div class="style-1144" >
+                                                                <p class="style-1145">20</p>
+                                                                <p class="style-1146"> MIN</p>
+                                                            </div>
+                                                            <div class="style-1147" ><svg class="style-1148" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="FavoriteBorderIcon">
+                                                                    <path d="M16.5 3c-1.74 0-3.41.81-4.5 2.09C10.91 3.81 9.24 3 7.5 3 4.42 3 2 5.42 2 8.5c0 3.78 3.4 6.86 8.55 11.54L12 21.35l1.45-1.32C18.6 15.36 22 12.28 22 8.5 22 5.42 19.58 3 16.5 3m-4.4 15.55-.1.1-.1-.1C7.14 14.24 4 11.39 4 8.5 4 6.5 5.5 5 7.5 5c1.54 0 3.04.99 3.57 2.36h1.87C13.46 5.99 14.96 5 16.5 5c2 0 3.5 1.5 3.5 3.5 0 2.89-3.14 5.74-7.9 10.05" class=""></path>
+                                                                </svg></div>
+                                                        </div>
+                                                        <div class="style-1149">
+                                                            {% if indx %2 != 0 %}
+                                                            <h6 class="style-1150" style="color: black ;">
+                                                                {%else%}
+                                                                <h6 class="style-1150">
+                                                                    {%endif%}
+                                                                {{resturant.name_en}}</h6>
+                                                            
+                                                            <div class="style-1151"><svg class="style-1152" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="StarSharpIcon">
+                                                                    <path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" class=""></path>
+                                                                </svg>
+                                                                {% if indx %2 != 0 %}
+                                                                <span class="style-1153" style="color:rgb(90, 88, 88);">3</span><span class="style-1154" style="color:rgb(90, 88, 88);">/5</span><span class="style-1155" style="color:rgb(90, 88, 88);">(6)</span></div>
+                                                                {%else%}
+                                                                <span class="style-1153" >3</span><span class="style-1154" >/5</span><span class="style-1155" >(6)</span></div>
+                                                                {%endif%}
+                                                            </div>
+                                                        <div class="style-1156">
+                                                            {% if indx %2 != 0 %}
+                                                            <span class="style-1157" style="color:rgb(90, 88, 88);">Burgers,Burritos,Fries,Beverages</span>
+                                                            {%else%}
+                                                            <span class="style-1157">Burgers,Burritos,Fries,Beverages</span>
+                                                            {%endif%}
+                                                            <div class="style-1158">
+                                                                <div class="style-1159">
+                                                                    {% if indx %2 != 0 %}
+                                                                    <h6 class="style-1160" style="color:rgb(90, 88, 88);">$ 0</h6>
+                                                                    <p class="style-1161" style="color:rgb(90, 88, 88);">Minimum</p>
+                                                                    {%else%}
+                                                                    <h6 class="style-1160">$ 0</h6>
+                                                                    <p class="style-1161">Minimum</p>
+                                                                    {%endif%}
+
+
+                                                                </div>
+                                                                <div class="style-1162">
+                                                                    <h6 class="style-1163"></h6><span class="style-1164"></span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div><span class="style-1165"></span><span class="style-1166"></span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        {% endfor%}
+                                        {% if type.resturants | length > 3 %}
+                                        <button  class="style-594" tabindex="0" type="button"><svg class="style-595" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="ArrowForwardIcon">
+                                            <path d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z" class=""></path>
+                                        </svg><span class="style-596"></span></button>
+                                        {%endif%}
+                                        
+                                        
+                                    </div>
+                                </div>
+                                </div>
+                                
+                                {% endfor %}
+                                
+                                
+                            </div>
+                            <div class="style-1605"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="style-1606">
+                <div class="style-1607">
+                    <div class="style-1608">
+                        <div class="style-1609"></div>
+                        <div class="style-1610">
+                            <div class="style-1611"></div>
+                            <h4 class="style-1612">All Restaurants</h4>
+                            <div class="style-1613"></div>
+                            <div class="style-1614">
+                                {% for category in categories%}
+                                <div class="style-1615">
+                                    <div class="style-1616">
+                                        <button class="style-1617" tabindex="0" type="button">
+                                            <div class="style-1618">
+                                                <div class="style-1619">
+                                                    <div class="style-1620" style="background-image: url({{category.cat_image}});"></div>
+                                                    <div class="style-1621">
+                                                        <p class="style-1622">20</p>
+                                                        <p class="style-1623"> MIN</p>
+                                                    </div>
+                                                    <div class="style-1624"><svg class="style-1625" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="FavoriteBorderIcon">
+                                                            <path d="M16.5 3c-1.74 0-3.41.81-4.5 2.09C10.91 3.81 9.24 3 7.5 3 4.42 3 2 5.42 2 8.5c0 3.78 3.4 6.86 8.55 11.54L12 21.35l1.45-1.32C18.6 15.36 22 12.28 22 8.5 22 5.42 19.58 3 16.5 3m-4.4 15.55-.1.1-.1-.1C7.14 14.24 4 11.39 4 8.5 4 6.5 5.5 5 7.5 5c1.54 0 3.04.99 3.57 2.36h1.87C13.46 5.99 14.96 5 16.5 5c2 0 3.5 1.5 3.5 3.5 0 2.89-3.14 5.74-7.9 10.05" class=""></path>
+                                                        </svg></div>
+                                                </div>
+                                                <div class="style-1626">
+                                                    <h6 class="style-1627">{{category.name_en}}</h6>
+                                                    <div class="style-1628"><svg class="style-1629" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="StarSharpIcon">
+                                                            <path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" class=""></path>
+                                                        </svg><span class="style-1630">3.38</span><span class="style-1631">/5</span><span class="style-1632">(8)</span></div>
+                                                </div>
+                                                <div class="style-1633"><span class="style-1634">Signature Pizzas,Pizzas,karahis,test1</span>
+                                                    <div class="style-1635">
+                                                        <div class="style-1636">
+                                                            <h6 class="style-1637">$ 8</h6>
+                                                            <p class="style-1638">Minimum</p>
+                                                        </div>
+                                                        <hr class="style-1639" />
+                                                        <div class="style-1640">
+                                                            <h6 class="style-1641"></h6><span class="style-1642"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div><span class="style-1643"></span><span class="style-1644"></span>
+                                        </button>
+                                    </div>
+                                </div>
+                                {%endfor%}    
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                            </div>
+                        </div>
+                        <div class="style-1975"></div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            {% include 'E_fotter.html' %}
+        </div>
+    </div>
+    <script src="static/js/e_script.js"></script>
+    <script src="{{ url_for('static', filename='js/E_login_script.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/E_cart_script.js') }}"></script>
+    
+</body>
+
+</html>

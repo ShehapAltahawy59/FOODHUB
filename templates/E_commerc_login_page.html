@@ -1,0 +1,45 @@
+<html>
+
+<head>
+    <title>FoodHub</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/E_header_style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/E_login_page_style.css') }}">
+    <!-- Firebase App (the core Firebase SDK) -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+
+    <!-- Firebase Authentication -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+
+    <!-- Firebase Firestore -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+
+    
+</head>
+
+<body class="style-0"><noscript class="">You need to enable JavaScript to run this app.</noscript>
+    <div class="">
+        <div class="">
+            {% include 'E_header.html' %}
+            <div class="style-6">
+                <div class="style-7">
+                    <h5 class="style-8">Welcome!</h5><span class="style-9">Sign up or log in to continue</span>
+                    <button onclick="signInWithGoogle()" class="style-10" tabindex="0" type="button">
+                        <span class="style-11"><svg class="style-12" focusable="false" aria-hidden="true" viewBox="0 0 20 20" width="20" height="20" xmlns="http://www.w3.org/2000/svg">
+                                <title class="">google [theme.palette.shadows.contrastText]</title>
+                                <path d="M19.822 8.004h-9.61c0 1 0 2.998-.007 3.998h5.569c-.213.999-.97 2.398-2.039 3.103-.001-.001-.002.006-.004.005-1.421.938-3.297 1.151-4.69.871-2.183-.433-3.91-2.016-4.612-4.027.004-.003.007-.031.01-.033C4 10.673 4 9.003 4.44 8.004c.565-1.837 2.345-3.513 4.53-3.972 1.759-.373 3.743.031 5.202 1.396.194-.19 2.685-2.622 2.872-2.82C12.058-1.907 4.077-.318 1.09 5.51l-.006.011a9.767 9.767 0 00.01 8.964l-.01.008a10.18 10.18 0 006.48 5.165c3.01.79 6.843.25 9.41-2.072l.003.003c2.175-1.958 3.529-5.296 2.845-9.586" fill-rule="evenodd" class=""></path>
+                            </svg></span><span class="style-13">CONTINUE WITH GOOGLE</span><span class="style-14"></span></button>
+                    <div class="style-15">
+                        <div class="style-16">
+                            <div class="style-17"></div><span class="style-18">or</span>
+                            <div class="style-19"></div>
+                        </div>
+                    </div><a href="#/new-login" class="style-20"><button class="style-21" tabindex="0" type="button"><span class="style-22">CONTINUE WITH EMAIL</span></button></a>
+                    <div class="style-23"><span class="style-24">By signing up, you agree to our <a href="#/terms" class="style-25"><span class="style-26">Terms and Conditions</span></a> and <a href="#/privacy" class="style-27"><span class="style-28">Privacy Policy</span></a></span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='js/E_login_script.js') }}"></script>
+</body>
+
+</html>

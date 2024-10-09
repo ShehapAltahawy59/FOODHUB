@@ -1,0 +1,53 @@
+<html>
+
+<head>
+    <title>FoodHub</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/E_header_style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/E_fotter_style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/E_orders_page_style.css') }}">
+
+    <!-- Firebase App (the core Firebase SDK) -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+
+    <!-- Firebase Authentication -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+
+    <!-- Firebase Firestore -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+</head>
+
+<body class="style-0"><noscript class="">You need to enable JavaScript to run this app.</noscript>
+    <div>
+        <div class="style-1">
+            {% include 'E_header.html' %}
+            
+            <div class="style-21">
+                <img src="https://multivendor.enatega.com/static/media/fav-bg.0c6b5d5c.png" alt="fav-bg" class="style-22" />
+            </div>
+
+            <div class="style-23">
+                <div class="style-24">
+                    <button class="style-25"  id="pastorderbutton" tabindex="0" type="button" onclick="showActiveOrders()">ACTIVE ORDERS<span class="style-26"></span></button>
+                    <button class="style-27" id="activeorderbutton" tabindex="0" type="button" onclick="showPastOrders()">PAST ORDERS<span class="style-28"></span></button>
+                </div>
+                
+                <div class="style-29" id="orders-content">
+                    <div class="style-30">
+                        <div class="style-31">
+                            <p class="style-32" id="orders-message"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {% include 'E_fotter.html' %}
+        </div>
+    </div>
+    
+    <script src="static/js/e_script.js"></script>
+    <script src="{{ url_for('static', filename='js/E_login_script.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/E_cart_script.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/E_orders_page_script.js') }}"></script>
+</body>
+
+</html>
