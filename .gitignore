@@ -69,5 +69,5 @@ node_modules/
 # dataconnect generated files
 .dataconnect
 
-firebase_config.json
-/static/js/E_login_script.js
+# firebase_config.json
+# /static/js/E_login_script.js
