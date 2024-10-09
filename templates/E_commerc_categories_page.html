@@ -1,6 +1,7 @@
 <html>
 
 <head>
+    <link rel="icon" href="/static/images/icon.png" type="image/jpg">
     <title>FoodHub</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/E_header_style.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/category_page_style.css') }}">
@@ -86,7 +87,7 @@
                         <div class="style-61">
                             <div class="style-62">
                                 <div class="style-63">
-                                    <ul class="style-64">
+                                    <ul class="style-64 scrollable">
                                         {% for type in types %}
                                         {%set index = loop.index0 %}
                                         <li  data-target={{index}} class="style-65"><a class="style-66">

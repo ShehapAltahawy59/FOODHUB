@@ -47,8 +47,6 @@ def get_categories(category_id):
     category =next((category for category in categories if category["id"] == category_id), None)
     
 
-
-    
     types=category["subcat"]["en"]
     types_names= [{index: name} for index, name in enumerate(types)]
     print(types_names)

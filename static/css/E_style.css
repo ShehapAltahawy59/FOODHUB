@@ -22,12 +22,38 @@
     width: 100%;
     margin-top: 70px;
     height: 400px;
-    background-image: url("https://b.zmtcdn.com/web_assets/81f3ff974d82520780078ba1cfbd453a1583259680.png");
+    background-image: url("/static/images/food.jpg");
     background-repeat: no-repeat;
     background-size: cover;
-    
+    display: flex; /* Use flexbox to arrange items */
+    flex-direction: column; /* Stack items vertically */
+    align-items: center; /* Center items horizontally */
+    justify-content: center; /* Center items vertically */
+    text-align: center; /* Center text */
 }
 
+.style-29 {
+    font-weight: 700;
+    text-transform: uppercase;
+    margin: 0; /* Remove margin */
+    font-size: 34px;
+    line-height: 41.99px;
+    letter-spacing: 0.2499px;
+    font-family: Poppins, 'Open Sans', sans-serif;
+    color: rgb(255, 255, 255);
+}
+
+.style-30 {
+    max-width: 800px; /* Set a maximum width for better readability */
+    margin: 20px 0; /* Add margin to separate from the previous paragraph */
+    padding: 15px; /* Add some padding */
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    border-radius: 10px; /* Rounded corners */
+    color: rgb(255, 255, 255); /* White text color */
+    font-size: 18px; /* Adjust font size */
+    line-height: 1.5; /* Line height for better readability */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* Subtle shadow for depth */
+}
 
 
 
