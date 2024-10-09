@@ -70,4 +70,4 @@ node_modules/
 .dataconnect
 
 firebase_config.json
-# /static/js/E_login_script.js
+/static/js/E_login_script.js
