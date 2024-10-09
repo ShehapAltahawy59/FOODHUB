@@ -3,3 +3,4 @@ firebase-admin
 google-cloud-firestore
 Werkzeug
 gunicorn
+flask-login
