@@ -5,57 +5,7 @@
     -webkit-font-smoothing: antialiased;
 }
 
-.style-1 {
-    transition: box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: none;
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    box-sizing: border-box;
-    flex-shrink: 0;
-    position: fixed;
-    z-index: 1100;
-    top: 0px;
-    left: auto;
-    right: 0px;
-    background-color: rgb(144, 234, 147);
-    color: rgb(255, 255, 255);
-}
 
-.style-2 {
-    min-height: 64px;
-    padding-left: 24px;
-    padding-right: 24px;
-    display: flex;
-    justify-content: space-between;
-    background-color: rgb(255, 255, 255);
-    position: relative;
-    -webkit-box-align: center;
-    align-items: center;
-}
-
-.style-3 {
-    display: flex;
-    align-self: center;
-    align-items: center;
-    flex-direction: row;
-    text-decoration: none solid rgb(0, 0, 238);
-}
-
-.style-4 {
-    margin-left: 8px;
-    font-weight: 700;
-    font-size: 20px;
-    line-height: 32px;
-    letter-spacing: 0.15px;
-    font-family: Poppins, 'Open Sans', sans-serif;
-    color: rgb(0, 0, 0);
-}
-
-.style-5 {
-    display: flex;
-    min-height: 64px;
-}
 
 .style-6 {
     width: 100%;

@@ -120,6 +120,7 @@ function updateCartItem(id, newQuantity) {
 
 
 function displayCartItems() {
+    try{
     const cart = JSON.parse(localStorage.getItem('cart')) || [];
     const container = document.querySelector('.style-22');
     container.style ="position: sticky; top: 100px; padding: 0px 5px;top:100px;padding:0px 5px;";
@@ -252,4 +253,8 @@ resultDiv.innerHTML = `
     
 Div.appendChild(resultDiv);
 container.appendChild(Div);
+}
+catch{
+    
+}
 }
