@@ -7,46 +7,79 @@ function navigateToPage(url) {
 
 const cardGroups = document.querySelectorAll('.card-group');
 
-    cardGroups.forEach(group => {
-        let currentIndex = 0;
-        const cardContainer = group.querySelector('.style-1137');
-        const cards = group.querySelectorAll('.style-1138');
-        const cardWidth = cards[0].offsetWidth + 25; // Adjust according to margin if needed
+cardGroups.forEach(group => {
+    let currentIndex = 0;
+    const cardContainer = group.querySelector('.style-1137'); // Card container
+    const cards = group.querySelectorAll('.style-1138'); // Individual cards
+    const cardWidth = cards[0].offsetWidth + 25; // Adjust according to margin if needed
+    const containerWidth = cardContainer.offsetWidth; // Width of visible area
 
-        function slideItems(direction) {
-            currentIndex += direction;
-
-            // Prevent scrolling past the limits
-            if (currentIndex < 0) {
-                currentIndex = 0;
-            } else if (currentIndex >= cards.length) {
-                currentIndex = cards.length - 1;
-            }
-
-            const offset = -currentIndex * cardWidth;
-            cards.forEach(card => {
-                card.style.transform = `translateX(${offset}px)`; // Move individual cards
-                card.style.transition = "transform 0.3s ease"; // Smooth transition
-            });
-
-            console.log(`Current Index: ${currentIndex}, Offset: ${offset}`); // Debugging log
-        }
+    function updateButtons() {
+        const totalWidth = cards.length * cardWidth;
+        const hiddenRight = totalWidth > containerWidth + (currentIndex * cardWidth);
+        const hiddenLeft = currentIndex > 0;
 
         const nextButton = group.querySelector('.style-594'); // Button to slide right
+        const prevButton = group.querySelector('.style-385'); // Button to slide left
+
+        // Show or hide the next button
         if (nextButton) {
-            nextButton.addEventListener('click', () => {
-                slideItems(1); // Slide right
-            });
+            if (hiddenRight) {
+                nextButton.style.display = "block";
+            } else {
+                nextButton.style.display = "none";
+            }
         }
 
-        const prevButton = group.querySelector('.style-385'); // Button to slide right
+        // Show or hide the previous button
         if (prevButton) {
-            prevButton.addEventListener('click', () => {
-                slideItems(-1); // Slide left
-            });
+            if (hiddenLeft) {
+                prevButton.style.display = "flex";
+            } else {
+                prevButton.style.display = "none";
+            }
         }
-    });
+    }
 
+    function slideItems(direction) {
+        currentIndex += direction;
+
+        // Prevent scrolling past the limits
+        if (currentIndex < 0) {
+            currentIndex = 0;
+        } else if (currentIndex >= cards.length) {
+            currentIndex = cards.length - 1;
+        }
+
+        const offset = -currentIndex * cardWidth;
+        cards.forEach(card => {
+            card.style.transform = `translateX(${offset}px)`; // Move individual cards
+            card.style.transition = "transform 0.3s ease"; // Smooth transition
+        });
+
+        // Update the button visibility based on the current index and hidden cards
+        updateButtons();
+
+        console.log(`Current Index: ${currentIndex}, Offset: ${offset}`); // Debugging log
+    }
+
+    const nextButton = group.querySelector('.style-594'); // Button to slide right
+    if (nextButton) {
+        nextButton.addEventListener('click', () => {
+            slideItems(1); // Slide right
+        });
+    }
+
+    const prevButton = group.querySelector('.style-385'); // Button to slide left
+    if (prevButton) {
+        prevButton.addEventListener('click', () => {
+            slideItems(-1); // Slide left
+        });
+    }
+
+    // Initialize by checking if there are hidden cards
+    updateButtons();
+});
 
 
     // Assuming your <li> elements are inside a <ul> with the class 'style-64'
