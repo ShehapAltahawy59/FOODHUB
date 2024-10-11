@@ -65,9 +65,7 @@
                                                                 <p class="style-1145">20</p>
                                                                 <p class="style-1146"> MIN</p>
                                                             </div>
-                                                            <div class="style-1147" ><svg class="style-1148" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="FavoriteBorderIcon">
-                                                                    <path d="M16.5 3c-1.74 0-3.41.81-4.5 2.09C10.91 3.81 9.24 3 7.5 3 4.42 3 2 5.42 2 8.5c0 3.78 3.4 6.86 8.55 11.54L12 21.35l1.45-1.32C18.6 15.36 22 12.28 22 8.5 22 5.42 19.58 3 16.5 3m-4.4 15.55-.1.1-.1-.1C7.14 14.24 4 11.39 4 8.5 4 6.5 5.5 5 7.5 5c1.54 0 3.04.99 3.57 2.36h1.87C13.46 5.99 14.96 5 16.5 5c2 0 3.5 1.5 3.5 3.5 0 2.89-3.14 5.74-7.9 10.05" class=""></path>
-                                                                </svg></div>
+                                                            
                                                         </div>
                                                         <div class="style-1149">
                                                             {% if indx %2 != 0 %}
@@ -81,9 +79,9 @@
                                                                     <path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" class=""></path>
                                                                 </svg>
                                                                 {% if indx %2 != 0 %}
-                                                                <span class="style-1153" style="color:rgb(90, 88, 88);">3</span><span class="style-1154" style="color:rgb(90, 88, 88);">/5</span><span class="style-1155" style="color:rgb(90, 88, 88);">(6)</span></div>
+                                                                <span class="style-1153" style="color:rgb(90, 88, 88);">{{category.rate}}</span><span class="style-1154" style="color:rgb(90, 88, 88);">/5</span><span class="style-1155" style="color:rgb(90, 88, 88);">({{category.rate_count}})</span></div>
                                                                 {%else%}
-                                                                <span class="style-1153" >3</span><span class="style-1154" >/5</span><span class="style-1155" >(6)</span></div>
+                                                                <span class="style-1153" >{{category.rate}}</span><span class="style-1154" >/5</span><span class="style-1155" >({{category.rate_count}})</span></div>
                                                                 {%endif%}
                                                             </div>
                                                         <div class="style-1156">
@@ -165,9 +163,7 @@
                                                                 <p class="style-1145">20</p>
                                                                 <p class="style-1146"> MIN</p>
                                                             </div>
-                                                            <div class="style-1147" ><svg class="style-1148" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="FavoriteBorderIcon">
-                                                                    <path d="M16.5 3c-1.74 0-3.41.81-4.5 2.09C10.91 3.81 9.24 3 7.5 3 4.42 3 2 5.42 2 8.5c0 3.78 3.4 6.86 8.55 11.54L12 21.35l1.45-1.32C18.6 15.36 22 12.28 22 8.5 22 5.42 19.58 3 16.5 3m-4.4 15.55-.1.1-.1-.1C7.14 14.24 4 11.39 4 8.5 4 6.5 5.5 5 7.5 5c1.54 0 3.04.99 3.57 2.36h1.87C13.46 5.99 14.96 5 16.5 5c2 0 3.5 1.5 3.5 3.5 0 2.89-3.14 5.74-7.9 10.05" class=""></path>
-                                                                </svg></div>
+                                                            
                                                         </div>
                                                         <div class="style-1149">
                                                             {% if indx %2 != 0 %}
@@ -181,9 +177,9 @@
                                                                     <path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" class=""></path>
                                                                 </svg>
                                                                 {% if indx %2 != 0 %}
-                                                                <span class="style-1153" style="color:rgb(90, 88, 88);">3</span><span class="style-1154" style="color:rgb(90, 88, 88);">/5</span><span class="style-1155" style="color:rgb(90, 88, 88);">(6)</span></div>
+                                                                <span class="style-1153" style="color:rgb(90, 88, 88);">{{resturant.rate}}</span><span class="style-1154" style="color:rgb(90, 88, 88);">/5</span><span class="style-1155" style="color:rgb(90, 88, 88);">({{resturant.rate_count}})</span></div>
                                                                 {%else%}
-                                                                <span class="style-1153" >3</span><span class="style-1154" >/5</span><span class="style-1155" >(6)</span></div>
+                                                                <span class="style-1153" >{{resturant.rate}}</span><span class="style-1154" >/5</span><span class="style-1155" >({{resturant.rate_count}})</span></div>
                                                                 {%endif%}
                                                             </div>
                                                         <div class="style-1156">
@@ -254,15 +250,13 @@
                                                         <p class="style-1622">20</p>
                                                         <p class="style-1623"> MIN</p>
                                                     </div>
-                                                    <div class="style-1624"><svg class="style-1625" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="FavoriteBorderIcon">
-                                                            <path d="M16.5 3c-1.74 0-3.41.81-4.5 2.09C10.91 3.81 9.24 3 7.5 3 4.42 3 2 5.42 2 8.5c0 3.78 3.4 6.86 8.55 11.54L12 21.35l1.45-1.32C18.6 15.36 22 12.28 22 8.5 22 5.42 19.58 3 16.5 3m-4.4 15.55-.1.1-.1-.1C7.14 14.24 4 11.39 4 8.5 4 6.5 5.5 5 7.5 5c1.54 0 3.04.99 3.57 2.36h1.87C13.46 5.99 14.96 5 16.5 5c2 0 3.5 1.5 3.5 3.5 0 2.89-3.14 5.74-7.9 10.05" class=""></path>
-                                                        </svg></div>
+                                                    
                                                 </div>
                                                 <div class="style-1626">
                                                     <h6 class="style-1627">{{category.name_en}}</h6>
                                                     <div class="style-1628"><svg class="style-1629" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="StarSharpIcon">
                                                             <path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" class=""></path>
-                                                        </svg><span class="style-1630">3.38</span><span class="style-1631">/5</span><span class="style-1632">(8)</span></div>
+                                                        </svg><span  class="style-1630">{{category.rate}}</span><span class="style-1631">/5</span><span class="style-1632">({{category.rate_count}})</span></div>
                                                 </div>
                                                 <div class="style-1633"><span class="style-1634">Signature Pizzas,Pizzas,karahis,test1</span>
                                                     <div class="style-1635">

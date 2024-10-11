@@ -1,3 +1,4 @@
+import random
 from flask import Flask, request, render_template, redirect, url_for, flash,jsonify,session,send_from_directory
 import firebase_admin
 from flask_login import LoginManager, login_user,login_required, logout_user, current_user
@@ -55,7 +56,25 @@ def home():
         type["resturants"]=[category for category in categories if type["id"] in category["list_types"]]
     
     return render_template('E_commerc.html',categories=categories,types=types,current_user=current_user)
+
+# @app.route('/randoumnumber')
+# def randoumnumber():
+#     categories_ref = db.collection('categories')
+#     categories = [doc.to_dict() for doc in categories_ref.stream()]
+
+#     for category in categories:
+#         rate_count = f"{round(random.uniform(4, 4.9),1)}"
+#         # Generate a random number between 4 and 4.9
+        
+        
+#         # Update the category with the new rating
+#         categories_ref.document(category["id"]).update({'rate': rate_count})
+
+#         print(f'Updated category {category["id"]} with random rating: {rate_count}')
     
+
+
+
 @app.route('/categories/<category_id>')
 def get_categories(category_id):
     items_ref = db.collection('items')
@@ -71,6 +90,7 @@ def get_categories(category_id):
     print(types_names)
     print(_items)
     return render_template('E_commerc_categories_page.html',items=_items,category=category,types=types_names)
+
 
 
 @login_manager.user_loader
@@ -90,6 +110,7 @@ def load_user(user_id):
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
+        print("here")
         data = request.get_json()
         email = data.get('email')
         name = data.get('username')

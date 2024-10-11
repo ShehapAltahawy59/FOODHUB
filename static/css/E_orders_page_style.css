@@ -243,3 +243,30 @@
         text-align: center;
     }
     
+
+    .cancel-order-button {
+        background-color: red; /* Button background color */
+        color: white; /* Text color */
+        cursor: pointer; /* Pointer cursor on hover */
+        border: none; /* Remove border */
+        border-radius: 5px; /* Rounded corners */
+        padding: 10px 20px; /* Padding around the text */
+        font-size: 16px; /* Font size */
+        font-weight: bold; /* Bold text */
+        transition: background-color 0.3s, transform 0.3s; /* Transition effects */
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+    }
+    
+    .cancel-order-button:hover {
+        background-color: darkred; /* Darker red on hover */
+        transform: scale(1.05); /* Slightly scale up on hover */
+    }
+    
+    .cancel-order-button:disabled {
+        background-color: grey; /* Grey background for disabled state */
+        cursor: not-allowed; /* Change cursor to indicate the button is disabled */
+        opacity: 0.6; /* Lower opacity for disabled state */
+    }
+    
+    /* Optional: You can add styles for focus to enhance accessibility */
+    

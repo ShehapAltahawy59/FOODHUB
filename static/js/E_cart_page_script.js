@@ -156,7 +156,14 @@ function displayCart() {
 }
 
 function palceorder(){
-    
+    const placeorderbutton = document.getElementById("placeorderbutton");
+    placeorderbutton.disabled=true;
+    placeorderbutton.style.backgroundColor='gray';
+    const placeorderbutton_name = document.getElementById("placeorderbutton_name");
+    placeorderbutton_name.style.display="none";
+    const loadingIndicator = document.getElementById("loadingIndicator");
+    loadingIndicator.style.display = "block";
+
     const cart = JSON.parse(localStorage.getItem('cart')) || [];
     orders_ref = db.collection("orders");
     const user = firebase.auth().currentUser;
@@ -200,8 +207,9 @@ function palceorder(){
     }
     db.collection("orders").add(order)
         .then((docRef) => {
-            console.log("Order added with ID: ", docRef.id);
-            alert("Order added successfully!");
+            clearCart();
+            window.location.href = "/orders";
+            
         })
         .catch((error) => {
             console.error("Error adding order: ", error);

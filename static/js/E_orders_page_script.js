@@ -30,7 +30,7 @@ function showActiveOrders() {
   .where('status', 'in', ['1', '2', '3']) // Use 'in' for multiple statuses
   .get().then(async (querySnapshot) => {
         if (querySnapshot.empty) {
-            console.log('hereeeeeeeeeeeeeeeeeeeee');
+            
             ordersContent.innerHTML='You have no active orders.';
         } else {
             
@@ -44,6 +44,29 @@ function showActiveOrders() {
                 // Now, you can display the order along with its items
                 const orderElement = document.createElement('div');
                 orderElement.classList.add('order');
+                let status_message="";
+                if(order.status == "1"){
+                    status_message="order Accepted, Watinig for Rider";
+                }
+                else if(order.status == "2") {
+                    status_message="Rider Accepted, On way to Resturant";
+                }
+                else if(order.status == "3") {
+                    status_message="On the Way to You!";
+                }
+
+                const cancelButton = document.createElement('button');
+                cancelButton.className = 'cancel-order-button';
+                cancelButton.type = 'button';
+                cancelButton.innerText = 'Cancel Order';
+                
+                cancelButton.onclick = () => cancelorder(order.orderid);
+
+                // Disable the button if the order is not in status 1
+                if (order.status !== "1") {
+                    cancelButton.disabled = true;
+                    }
+
                 orderElement.innerHTML = `
     <div class="order-details">
         <h3 class="order-id">Order ID: ${order.orderid}</h3>
@@ -57,6 +80,7 @@ function showActiveOrders() {
                     <th>Quantity</th>
                     <th>Price</th>
                     <th>Total</th>
+                    <th>status</th>
                 </tr>
             </thead>
             <tbody>
@@ -66,17 +90,22 @@ function showActiveOrders() {
                         <td class="item-quantity">${item.quantity}</td>
                         <td class="item-price">$${item.priceafterdiscount}</td>
                         <td class="item-total">$${(item.priceafterdiscount * item.quantity).toFixed(2)}</td>
+                        <td class="item-total">${status_message}</td>
+                        
                     </tr>
+
                 `).join('')}
             </tbody>
         </table>
+        <div button_container></div>
     </div>
 `;
+                orderElement.querySelector('.order-details').appendChild(cancelButton);
                 document.getElementById('orders-content').appendChild(orderElement);
             }
         }
     }).catch((error) => {
-        console.error("Error fetching past orders: ", error);
+        console.error("Error fetching active orders: ", error);
     });
 }
 
@@ -99,7 +128,7 @@ function showPastOrders() {
     
 
     // Fetch past orders from Firestore for the specific user
-    db.collection('orders').where('user_id', '==', userId).where('status', '==', '4').get().then(async (querySnapshot) => {
+    db.collection('orders').where('user_id', '==', userId).where('status' ,'in',[ '4','5']).get().then(async (querySnapshot) => {
         if (querySnapshot.empty) {
             ordersContent.innerHTML='You have no past orders.';
         } else {
@@ -173,3 +202,32 @@ async function fetchOrderItems(order) {
  // Filter out any null values (in case an item wasn't found)
  return resolvedItems.filter(item => item !== null);
 }
+
+
+function cancelorder(orderid){
+    console.log(orderid);
+    db.collection('orders')
+    .where('orderid', "==", orderid)
+    .where('status', "==","1") // Use 'in' for multiple statuses
+    .get().then( (querySnapshot) => {
+        if(!querySnapshot.empty){
+            
+            const orderDoc = querySnapshot.docs[0]; // Get the first order document
+                
+                // Update the status to '5'
+                orderDoc.ref.update({
+                    status: "5" // Set status to 5
+                })
+                    .then(() => {
+                        showActiveOrders();
+                    })
+                    .catch((error) => {
+                        console.error("Error canceling order: ", error);
+                    });
+                
+        } else {
+            console.log("No order found with the given orderid.");
+        }
+        })
+}
+    
