@@ -156,6 +156,19 @@ function displayCart() {
 }
 
 function palceorder(){
+    const addressField = document.getElementById("address").textContent.trim();
+    const phoneField = document.getElementById("phone").textContent.trim();
+    if(addressField===""){
+        alert("please enter address");
+        window.location.href = "/profile";
+        return;
+     }
+     else if(phoneField===""){
+        alert("please enter phone number");
+        window.location.href = "/profile";
+        return;
+     }
+     else{
     const placeorderbutton = document.getElementById("placeorderbutton");
     placeorderbutton.disabled=true;
     placeorderbutton.style.backgroundColor='gray';
@@ -216,5 +229,5 @@ function palceorder(){
             alert("Failed to add order. Try again.");
         });
 
-    }});
+}});}
 }
