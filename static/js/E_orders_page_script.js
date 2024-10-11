@@ -72,6 +72,7 @@ function showActiveOrders() {
         <h3 class="order-id">Order ID: ${order.orderid}</h3>
         <p class="order-date">Order Date: ${order.time.toDate().toLocaleString()}</p>
         <p class="order-total">Total: $${order.totalprice}</p>
+        <p class="order-total" style="display:inline-block">Status: </p><p class="order-total" style="color:green; display:inline-block; padding-left:5px">${status_message}</p>
         <h4 class="order-items-title">Items:</h4>
         <table class="order-items-table">
             <thead>
@@ -90,7 +91,7 @@ function showActiveOrders() {
                         <td class="item-quantity">${item.quantity}</td>
                         <td class="item-price">$${item.priceafterdiscount}</td>
                         <td class="item-total">$${(item.priceafterdiscount * item.quantity).toFixed(2)}</td>
-                        <td class="item-total">${status_message}</td>
+                        
                         
                     </tr>
 
