@@ -1,6 +1,8 @@
 
 let userId = null;
 
+
+
 firebase.auth().onAuthStateChanged((user) => {
     if (user) {
         // User is signed in

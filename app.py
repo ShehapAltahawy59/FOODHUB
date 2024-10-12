@@ -1,3 +1,4 @@
+import json
 import random
 from flask import Flask, request, render_template, redirect, url_for, flash,jsonify,session,send_from_directory
 import firebase_admin
@@ -34,12 +35,29 @@ except:
     }
     cred = credentials.Certificate(firebase_config)
 
+try:
+        with open('firebase_config_js.json') as config_file:
+            firebase_config = json.load(config_file)
+    
+except:
+    firebase_config = {
+    "apiKey": os.environ.get("FIREBASE_API_KEY"),
+    "authDomain": os.environ.get("FIREBASE_AUTH_DOMAIN"),
+    "projectId": os.environ.get("FIREBASE_PROJECT_ID"),
+    "storageBucket": os.environ.get("FIREBASE_STORAGE_BUCKET"),
+    "messagingSenderId": os.environ.get("FIREBASE_MESSAGING_SENDER_ID"),
+    "appId": os.environ.get("FIREBASE_APP_ID"),
+    "measurementId": os.environ.get("FIREBASE_MEASUREMENT_ID")
+    }   
+
 
 firebase_admin.initialize_app(cred, {
     'storageBucket': 'foodorderapp-2b2df.appspot.com'
 })
 db = firestore.client()
 bucket = storage.bucket()
+
+
 
 @app.route('/')
 def home():
@@ -169,6 +187,36 @@ def profile():
     
     return render_template('E_profile_page.html',current_user=current_user)
 
+
+
+@app.route('/check-email', methods=['POST'])
+def check_email():
+    email = request.json.get('email')
+    try:
+        user = auth.get_user_by_email(email)
+        if user.email_verified:
+            return jsonify({"message": "Email is verified!"})
+        else:
+            return jsonify({"message": "Email is not verified!"}), 400
+    except firebase_admin.auth.UserNotFoundError:
+        return jsonify({"message": "User not found"}), 404
+
+@app.route('/check-email-exists', methods=['POST'])
+def check_email_exists():
+    email = request.json.get('email')
+    try:
+        user = auth.get_user_by_email(email)  # Check if user exists
+        return jsonify({"exists": True, "message": "Email exists!"}), 200
+    except firebase_admin.auth.UserNotFoundError:
+        return jsonify({"exists": False, "message": "Email does not exist."}), 404
+
+
+
+@app.route('/firebase-config', methods=['GET'])
+def get_firebase_config():
+       
+    # Send the Firebase config as JSON to the frontend
+    return jsonify(firebase_config)
 
 if __name__ == '__main__':
     app.run(debug=True)

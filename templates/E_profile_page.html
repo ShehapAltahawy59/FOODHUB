@@ -14,6 +14,7 @@
 
     <!-- Firebase Firestore -->
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="{{ url_for('static', filename='js/firebase_init.js') }}"></script>
 </head>
 
 <body class="style-0">
@@ -47,7 +48,7 @@
                                 <input name="phone" placeholder="Mobile Number" class="style-40" disabled="" value={{phone}} />
                                 {%endfor%}
                                 {%else%}
-                                <input name="phone" placeholder="Mobile Number" class="style-40" disabled="" value=" 010174659" />
+                                <input name="phone" placeholder="Mobile Number" class="style-40" disabled="" value="" />
                                 {%endif%}
                                 <div class="">
                                     <button  onclick="enablePhoneInput()" class="style-41" tabindex="0" type="button">

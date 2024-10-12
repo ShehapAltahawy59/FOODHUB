@@ -16,6 +16,7 @@
 
     <!-- Firebase Firestore -->
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="{{ url_for('static', filename='js/firebase_init.js') }}"></script>
 </head>
 
 <body class="style-0">
@@ -69,9 +70,9 @@
                                         <div class="style-52"><svg class="style-53" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="StarSharpIcon">
                                                 <path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" class=""></path>
                                             </svg>
-                                            <p class="style-54">3.38</p>
+                                            <p class="style-54">{{category.rate}}</p>
                                             <p class="style-55">/5</p>
-                                            <p class="style-56">8</p>
+                                            <p class="style-56">({{category.rate_count}})</p>
                                         </div>
                                     </div>
                                     <div class="style-57">

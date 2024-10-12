@@ -1,23 +1,23 @@
+
+
 let firsttry=true;
 
-const firebaseConfig = {
-    apiKey: "AIzaSyBkuZTtYT_Kk0v50TCjJn0oV25hykAoQpA",
-    authDomain: "foodorderapp-2b2df.firebaseapp.com",
-    projectId: "foodorderapp-2b2df",
-    storageBucket: "foodorderapp-2b2df.appspot.com",
-    messagingSenderId: "255365039854",
-    appId: "1:255365039854:web:da178754d3b0450f6315ff",
-    measurementId: "G-EHD8B4S495"
-  };
+// const firebaseConfig = {
+//     apiKey: "AIzaSyBkuZTtYT_Kk0v50TCjJn0oV25hykAoQpA",
+//     authDomain: "foodorderapp-2b2df.firebaseapp.com",
+//     projectId: "foodorderapp-2b2df",
+//     storageBucket: "foodorderapp-2b2df.appspot.com",
+//     messagingSenderId: "255365039854",
+//     appId: "1:255365039854:web:da178754d3b0450f6315ff",
+//     measurementId: "G-EHD8B4S495"
+//   };
 // Initialize Firebase
-firebase.initializeApp(firebaseConfig);
+// firebase.initializeApp(firebaseConfig);
 
 // Reference to the Firebase Auth service
-const auth = firebase.auth();
-const db = firebase.firestore();
 
 function set_login_action(){
-document.getElementById("loginForm").addEventListener("submit", function(e) {
+document.getElementById("loginForm").addEventListener("submit", async function(e) {
     e.preventDefault();
     const button = document.getElementById("loginbutton");
     
@@ -32,12 +32,16 @@ document.getElementById("loginForm").addEventListener("submit", function(e) {
     var email = document.getElementById("email").value;
     var password = document.getElementById("password").value;
 
+    if (await checkEmailVerification(email) == true){
     // Firebase Authentication
     firebase.auth().signInWithEmailAndPassword(email, password)
       .then((userCredential) => {
         // Get the user's UID
         var user = userCredential.user;
         var uid = user.uid;
+        
+
+        
         // Send UID to Flask backend to store in Firestore
         fetch("/login", {
             method: "POST",
@@ -61,6 +65,9 @@ document.getElementById("loginForm").addEventListener("submit", function(e) {
               
             }
           });
+      
+
+          
         
         
       })
@@ -73,7 +80,16 @@ document.getElementById("loginForm").addEventListener("submit", function(e) {
         button_span.style.display="block"
         
       });
+    }
+    else{
+        errorMessage_div.innerHTML=`Please verify your Account`
+        errorMessage_div.style.display="flex"
+            button.disabled=false;
+            loadingIndicator.style.display="none";
+            button_span.style.display="block"
+    }
   });
+
 }
 
 
@@ -318,10 +334,14 @@ function signInWithEmail (){
 
 }
 
- function checkemailexist(){
+ async function checkemailexist(){
+    
     const email_input = document.querySelector("input[name='email']");
     const email_value=email_input.value;
     const div = document.querySelector('.style-6');
+
+    
+
     if(validateEmail(email_value)){
         const button= document.getElementById("mybutton");
         const button_span= document.getElementById("button_span");
@@ -330,10 +350,8 @@ function signInWithEmail (){
         button.disabled=true;
         button_span.style.display = "none";
         document.getElementById("loadingIndicator").style.display = "block";
-        
-    db.collection("users").where("email", "==", email_value).get().then((querySnapshot) => {
-        if (!querySnapshot.empty) {
 
+        if(await checkEmailExists(email_value) == true  ){
             
             div.innerHTML=`
             <div style="max-width:444px;padding-left:24px;padding-right:24px;background:rgb(255, 255, 255) none repeat scroll 0% 0% / auto padding-box border-box;text-align:center;padding-top:40px;border-radius:20px;padding-bottom:40px;width: 100%;margin-left: auto;box-sizing:border-box;margin-right: auto;display:block;">
@@ -378,10 +396,11 @@ function signInWithEmail (){
 </div>
             `
             set_login_action();
-                                    }
-                                else{
-                                    
-                                    div.innerHTML=`<div style="max-width:444px;padding-left:24px;padding-right:24px;background:rgb(255, 255, 255) none repeat scroll 0% 0% / auto padding-box border-box;text-align:center;padding-top:40px;border-radius:20px;padding-bottom:40px;width: 100%;margin-left: auto;box-sizing:border-box;margin-right: auto;display:block;">
+
+        }
+        else{
+            
+            div.innerHTML=`<div style="max-width:444px;padding-left:24px;padding-right:24px;background:rgb(255, 255, 255) none repeat scroll 0% 0% / auto padding-box border-box;text-align:center;padding-top:40px;border-radius:20px;padding-bottom:40px;width: 100%;margin-left: auto;box-sizing:border-box;margin-right: auto;display:block;">
                                     <div style="display:flex;">
                                         <div style="margin: auto;">
                                             <div m="auto" style="position:relative;-webkit-box-align:center;align-items:center;-webkit-box-pack:center;justify-content:center;flex-shrink:0;font-family:Poppins, 'Open Sans', sans-serif;font-size:20px;line-height:20px;border-radius:50%;overflow:hidden;user-select:none;width: 100px;height:100px;display:flex;align-self:center;"><img alt="email" src="https://multivendor.enatega.com/static/media/emailLock.2219c6ed.png" style="filter: invert(0);width: 100%;height:100px;text-align:center;object-fit:cover;color:rgba(0, 0, 0, 0);text-indent:10000px;" /></div>
@@ -450,8 +469,8 @@ function signInWithEmail (){
                                 </div>`
                                 set_signup_action();
                                 
-                                }
-})
+        }
+
     }
     else{
         console.log("hereeeeeeeeeee");
@@ -513,3 +532,61 @@ function validateEmail(email) {
   function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
+
+
+async function checkEmailExists(email) {
+    try {
+        // Use the fetch API to send the email to the Flask backend
+        const response = await fetch('/check-email-exists', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ email: email })  // Send email to backend
+        });
+
+        // Parse the response from the server
+        const result = await response.json();
+
+        // Check if the response is OK (200 status code)
+        if (response.ok) {
+            return true;  // Alert user if email exists
+        } else {
+            return false;  // Alert user if email does not exist
+        }
+    } catch (error) {
+        console.error('Error:', error);  // Log error if something goes wrong
+        alert('An error occurred while checking email existence.');
+    }
+}
+
+
+
+// Initialize the Firebase Admin SDK
+
+async function checkEmailVerification(email) {
+    try {
+        // Use the fetch API to send the email to the Flask backend
+        const response = await fetch('/check-email', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ email: email })  // Send email to backend
+        });
+
+        // Parse the response from the server
+        const result = await response.json();
+
+        // Check if the response is OK (200 status code)
+        if (response.ok) {
+            return true;  // Alert user if email is verified
+        } else {
+            return false;  // Alert user if email is not verified
+        }
+    } catch (error) {
+        console.error('Error:', error);  // Log error if something goes wrong
+        alert('An error occurred while checking email verification.');
+    }
+}
+
