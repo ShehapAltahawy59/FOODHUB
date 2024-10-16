@@ -1,0 +1,73 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/Admin_DASHBOARD_riders_style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/ADMIN_dashboard_orders_style.css') }}">
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+
+    <!-- Firebase Authentication -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+
+    <!-- Firebase Firestore -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="{{ url_for('static', filename='js/firebase_init.js') }}"></script>
+</head>
+
+<body class="style-0">
+    <div class="style-1">
+        <div class="">
+            <header class="style-2" mb="10">
+                <div class="style-3"><button class="style-4" tabindex="0" type="button" aria-label="open drawer"><svg class="style-5" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="MenuIcon">
+                            <path d="M3 18h18v-2H3zm0-5h18v-2H3zm0-7v2h18V6z" class=""></path>
+                        </svg><span class="style-6"></span></button></div>
+            </header>
+            {% include 'Admin_DASHBOARD_left_nav.html' %}
+            
+            <div class="style-64">
+                <div class="style-65">
+                    <header class="style-66">
+                        <div class="style-67">
+                            <div class="style-68">Orders</div>
+                            <div class="">
+                                <div class="style-69"><button class="style-70" tabindex="0" type="button" aria-label="account of current user" aria-controls="menu-appbar" aria-haspopup="true"><img alt="..." src="https://multivendor-admin.enatega.com/static/media/team-4-800x800.99c612eb.jpg" class="style-71" /><span class="style-72"></span></button>
+                                    <p class="style-73">Admin</p>
+                                </div>
+                            </div>
+                        </div>
+                    </header>
+                </div>
+                <div class="style-74"></div>
+                
+                <div class="style_order-21">
+                    <img src="https://multivendor.enatega.com/static/media/fav-bg.0c6b5d5c.png" alt="fav-bg" class="style_order-22" />
+                </div>
+                <div class="style_order-23">
+                    <div class="style_order-24">
+                        <button class="style_order-25"  id="pastorderbutton" tabindex="0" type="button" onclick="showActiveOrders()">ACTIVE ORDERS<span class="style_order-26"></span></button>
+                        <button class="style_order-27" id="activeorderbutton" tabindex="0" type="button" onclick="showPastOrders()">PAST ORDERS<span class="style_order-28"></span></button>
+                    </div>
+                    
+                    <div class="style_order-29" id="orders-content">
+                        <div class="style_order-30">
+                            <div class="style_order-31">
+                                <p class="style_order-32" id="orders-message"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="style-431">
+                    <div class="style-432">
+                        <p class="style-433" value="0">©2024</p><a class="style-434" href="" target="_blank" value="1">FOODHUB</a><a class="style-435" href="" target="_blank" value="2">About Us</a><a class="style-436" href="" target="_blank" value="3">Blog</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/ADMIN_dashboard_orders_script.js') }}"></script>
+</body>
+
+</html>

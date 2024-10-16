@@ -2,9 +2,9 @@ var firebaseConfig;
 var auth, db; // Declare auth and db globally
 var firebaseInitialized = false; // Flag to check if Firebase has been initialized
 
-function initializeFirebase() {
+async function initializeFirebase() {
     if (!firebaseInitialized) {
-        fetch('/firebase-config')
+        await fetch('/firebase-config')
             .then(response => response.json())
             .then(config => {
                 firebaseConfig = config;
@@ -28,4 +28,4 @@ function initializeFirebase() {
 }
 
 // Call initializeFirebase() when the script loads
-initializeFirebase()
+initializeFirebase();

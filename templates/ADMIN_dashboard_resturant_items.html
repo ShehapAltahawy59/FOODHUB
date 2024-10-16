@@ -1,0 +1,241 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/ADMIN_dashboard_resturant_items_style.css') }}">
+</head>
+
+<body class="style-0">
+    <div class="style-1">
+        <div class="">
+            <header class="style-2" mb="10">
+                <div class="style-3"><button class="style-4" tabindex="0" type="button" aria-label="open drawer"><svg class="style-5" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="MenuIcon">
+                            <path d="M3 18h18v-2H3zm0-5h18v-2H3zm0-7v2h18V6z" class=""></path>
+                        </svg><span class="style-6"></span></button></div>
+            </header>
+            {% include 'Admin_DASHBOARD_left_nav.html' %}
+            <div class="style-64">
+                <div class="style-65">
+                    <header class="style-66">
+                        <div class="style-67">
+                            <div class="style-68">Restaurant Items</div>
+                            <div class="">
+                                <div class="style-69"><button class="style-70" tabindex="0" type="button" aria-label="account of current user" aria-controls="menu-appbar" aria-haspopup="true"><img alt="..." src="https://multivendor-admin.enatega.com/static/media/team-4-800x800.99c612eb.jpg" class="style-71" /><span class="style-72"></span></button>
+                                    <p class="style-73">Admin</p>
+                                </div>
+                            </div>
+                        </div>
+                    </header>
+                </div>
+
+                <div class="style-74"></div>
+                <div class="style-75">
+
+
+
+                    
+            
+                    
+                    <div class="style-76">
+                        <div class="style-77">
+                            <div class="style-78">
+                                <div class="style-79">
+                                    <div class="style-80">
+                                        <h6 class="style-81">Add Item</h6>
+                                    </div>
+                                    
+                                </div>
+                                <form class="" action="{{ url_for('add_item') }}" method="post" enctype="multipart/form-data">
+                                    <div class="style-89">
+                                        <div class="style-90">
+                                            <div class="style-91">
+                                                <p class="style-92">Resturant:</p>
+                                                <div class="style-93">
+                                                    <select id="item_cat" name="item_cat" class="style-94" required>
+                                                        {% for category in categories %}
+                                                            <option value="{{ category.id }}">{{ category.name_ar }}</option>
+                                                        {% endfor %}
+                                                      </select>
+                                                </div>
+                                            </div>
+                                            <div class="style-91">
+                                                <p class="style-92">Arabic Name:</p>
+                                                <div class="style-93">
+                                                    <input type="text" id="name_ar" name="name_ar" placeholder="Arabic Name" class="style-94"  required /></div>
+                                            </div>
+                                            <div class="style-91">
+                                                <p class="style-92">English Name:</p>
+                                                <div class="style-93">
+                                                    <input type="text" id="name_en" name="name_en" placeholder="English Name" class="style-94"   />
+                                                </div>
+                                            </div>
+                                            <div class="style-91">
+                                                <p class="style-92">Sub Category:</p>
+                                                <div class="style-93">
+                                                    <select id="item_cat_sub" name="item_cat_sub" class="style-94" required>
+                                                        <option value="">Select Subcategory</option>
+                                                      </select>
+                                                </div>
+                                            </div>
+                                            <div class="style-91">
+                                                <p class="style-92">Price:</p>
+                                                <div class="style-93"><input type="text" id="price" name="price" placeholder="Price" class="style-94"  required />
+                                                </div>
+                                            </div>
+                                            <div class="style-91">
+                                                <p class="style-92">Discount:</p>
+                                                <div class="style-93"><input type="text" id="discount" name="discount" placeholder="Discount" class="style-94"   /></div>
+                                            </div>
+                                            <div class="style-91">
+                                                <p class="style-92">Extras Name EN:</p>
+                                                <div class="style-93"><input type="text" id="extras_name" name="extras_name" placeholder="Extras Name EN" class="style-94"   /></div>
+                                            </div>
+                                            <div class="style-91">
+                                                <p class="style-92">Extras Name AR:</p>
+                                                <div class="style-93"><input type="text" id="extras_name_ar" name="extras_name_ar" placeholder="Extras Name AR" class="style-94"   /></div>
+                                            </div>
+                                            <div class="style-91">
+                                                <p class="style-92">Extras Price:</p>
+                                                <div class="style-93"><input type="text" id="extras_price" name="extras_price" placeholder="Extras Price" class="style-94"   /></div>
+                                            </div>
+                                            <div class="style-91">
+                                                <p class="style-92">Item Description AR:</p>
+                                                <div class="style-93"><input type="text" id="item_desc" name="item_desc" placeholder="Item Description AR" class="style-94"   /></div>
+                                            </div>
+                                            <div class="style-91">
+                                                <p class="style-92">Item Description EN:</p>
+                                                <div class="style-93"><input type="text" id="item_desc_en" name="item_desc_en" placeholder="Item Description EN" class="style-94"   /></div>
+                                            </div>
+                                            <div class="style-91">
+                                                <p class="style-92">Item Image URL:</p>
+                                                <div class="style-93"><input type="text" id="item_image" name="item_image" placeholder="Item Image URL" class="style-94"   /></div>
+                                            </div>
+                                            <div class="style-91">
+                                                <p class="style-92">Sizes Name EN:</p>
+                                                <div class="style-93"><input type="text" id="sizes_name" name="sizes_name" placeholder="Sizes Name EN" class="style-94"   /></div>
+                                            </div>
+                                            <div class="style-91">
+                                                <p class="style-92">Sizes Price:</p>
+                                                <div class="style-93"><input type="text" id="sizes_price" name="sizes_price" placeholder="Sizes Price" class="style-94"   /></div>
+                                            </div>
+                    
+                                        </div>
+                                    </div>
+                                    
+                                    <div class=""><button  type="submit" class="style-119" tabindex="0" type="button">Save<span class="style-120"></span></button></div>
+                                </form>
+                                <div class="style-121"></div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    
+                    
+                    <div class="style-2310" role="heading" aria-level="1">
+                        <div class="style-2311">
+                            <h4 class="style-2312">items Sections</h4>
+                        </div>
+                        <div class="style-2313"></div>
+                        <div class="style-2314">
+                            <div class="style-2315"></div>
+                            <div class="style-2316"></div>
+                        </div>
+                    </div>
+                    <header class="style-2317">
+                        <div class="style-2318"><button class="style-2319" tabindex="0" type="button"><svg class="style-2320" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="RefreshIcon">
+                                    <path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4z" class=""></path>
+                                </svg><span class="style-2321"></span></button>
+                            <div class="style-2322"><input placeholder="Search" type="text" class="style-2323" value="" />
+                                <div class="style-2324"><svg class="style-2325" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="SearchIcon">
+                                        <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14" class=""></path>
+                                    </svg></div>
+                            </div>
+                        </div>
+                    </header>
+                    <div class="style-2326">
+                        <div class="style-2327">
+                            <div class="style-2328" role="table">
+                                <div class="style-2329" role="rowgroup">
+                                    <div class="style-2330" role="row">
+                                        <div class="style-2331"><input type="checkbox" name="select-all-rows" aria-label="select-all-rows" class="style-2332" /></div>
+                                        <div class="style-2333">
+                                            <div role="columnheader" tabindex="0" class="style-2334">
+                                                <div class="">Name</div><span class="style-2335">▲</span>
+                                            </div>
+                                        </div>
+                                        <div class="style-2336">
+                                            <div role="columnheader" tabindex="0" class="style-2337">
+                                                <div class="">Status</div>
+                                            </div>
+                                        </div>
+                                        <div class="style-2336">
+                                            <div role="columnheader" tabindex="0" class="style-2337">
+                                                <div class="">Price</div>
+                                            </div>
+                                        </div>
+                                        <div class="style-2336">
+                                            <div role="columnheader" tabindex="0" class="style-2337">
+                                                <div class="">Discount</div>
+                                            </div>
+                                        </div>
+                                        <div class="style-2338">
+                                            <div role="columnheader" tabindex="0" class="style-2339">
+                                                <div class="">Restaurants</div><span class="style-2340">▲</span>
+                                            </div>
+                                        </div>
+                                        <div class="style-2341">
+                                            <div role="columnheader" tabindex="0" class="style-2342">
+                                                <div class="">Action</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div offset="250px" class="style-2343" role="rowgroup">
+                                    
+                                    
+                                    
+                                    
+                                </div>
+                        </div>
+                    </div>
+                    <div class="">
+                        <nav class="style-2524"><span class="style-2525">Rows per page:</span>
+                            <div class="style-2526"><select id="rows-per-page" aria-label="Rows per page:" class="style-2527">
+                                    <option value="10" selected="" class="style-2528">10</option>
+                                    <option value="15" class="style-2529">15</option>
+                                    <option value="20" class="style-2530">20</option>
+                                    <option value="25" class="style-2531">25</option>
+                                    <option value="30" class="style-2532">30</option>
+                                </select><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="style-2533">
+                                    <path d="M7 10l5 5 5-5z" class=""></path>
+                                    <path d="M0 0h24v24H0z" fill="none" class=""></path>
+                                </svg></div><span class="style-2534">1-10 of 98</span>
+                            <div class="style-2535"><button type="button" aria-label="First Page" aria-disabled="true" disabled="" class="style-2536"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" role="presentation" class="">
+                                        <path d="M18.41 16.59L13.82 12l4.59-4.59L17 6l-6 6 6 6zM6 6h2v12H6z" class=""></path>
+                                        <path fill="none" d="M24 24H0V0h24v24z" class=""></path>
+                                    </svg></button><button type="button" aria-label="Previous Page" aria-disabled="true" disabled="" class="style-2537"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" role="presentation" class="">
+                                        <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" class=""></path>
+                                        <path d="M0 0h24v24H0z" fill="none" class=""></path>
+                                    </svg></button><button type="button" aria-label="Next Page" aria-disabled="false" class="style-2538"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" role="presentation" class="">
+                                        <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" class=""></path>
+                                        <path d="M0 0h24v24H0z" fill="none" class=""></path>
+                                    </svg></button><button type="button" aria-label="Last Page" aria-disabled="false" class="style-2539"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" role="presentation" class="">
+                                        <path d="M5.59 7.41L10.18 12l-4.59 4.59L7 18l6-6-6-6zM16 6h2v12h-2z" class=""></path>
+                                        <path fill="none" d="M0 0h24v24H0V0z" class=""></path>
+                                    </svg></button></div>
+                        </nav>
+                    </div>
+                </div>
+                <div class="style-2540">
+                    <div class="style-2541">
+                        <p class="style-2542" value="0">©2024</p><a class="style-2543" href="" target="_blank" value="1">FOODHUB</a><a class="style-2544" href="" target="_blank" value="2">About Us</a><a class="style-2545" href="" target="_blank" value="3">Blog</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="{{ url_for('static', filename='js/ADMIN_dashboard_resturnat_items_script.js') }}"></script>
+</body>
+
+</html>

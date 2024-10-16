@@ -1,0 +1,189 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/ADMIN_dashboard_Coupons_style.css') }}">
+</head>
+
+<body class="style-0">
+    <div class="style-1">
+        <div class="">
+            <header class="style-2" mb="10">
+                <div class="style-3"><button class="style-4" tabindex="0" type="button" aria-label="open drawer"><svg class="style-5" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="MenuIcon">
+                            <path d="M3 18h18v-2H3zm0-5h18v-2H3zm0-7v2h18V6z" class=""></path>
+                        </svg><span class="style-6"></span></button></div>
+            </header>
+            {% include 'Admin_DASHBOARD_left_nav.html' %}
+            <div class="style-64">
+                <div class="style-65">
+                    <header class="style-66">
+                        <div class="style-67">
+                            <div class="style-68">Coupons</div>
+                            <div class="">
+                                <div class="style-69"><button class="style-70" tabindex="0" type="button" aria-label="account of current user" aria-controls="menu-appbar" aria-haspopup="true"><img alt="..." src="https://multivendor-admin.enatega.com/static/media/team-4-800x800.99c612eb.jpg" class="style-71" /><span class="style-72"></span></button>
+                                    <p class="style-73">Admin</p>
+                                </div>
+                            </div>
+                        </div>
+                    </header>
+                </div>
+                <div class="style-74"></div>
+                <div class="style-75">
+                    <div class="style-76">
+                        <div class="style-77">
+                            <div class="style-78">
+                                <div class="style-79">
+                                    <div class="style-80">
+                                        <h6 class="style-81">Add Coupon</h6>
+                                    </div>
+                                    
+                                </div>
+                                <div class="style-89">
+                                    <form class="" action="{{ url_for('add_Coupons') }}" method="post" enctype="multipart/form-data">
+                                        <div class="style-90">
+                                            <div class="style-91">
+                                                <div class="style-92">
+                                                    <p class="style-93">Code</p>
+                                                    <div class="style-94"><input name="code" placeholder="Code e.g SALE50" type="text" class="style-95" value="" /></div>
+                                                </div>
+                                                <div class="style-92">
+                                                    <p class="style-93">Discount</p>
+                                                    <div class="style-94"><input name="Discount" placeholder="Discount % i.e 1-99" type="text" class="style-95" value="" /></div>
+                                                </div>
+                                                <div class="style-96">
+                                                    <p class="style-97">Based on Count</p>
+                                                    <div class="style-97"><select id="Based_on_Count"   class="style-94" name="Based_on_Count" required>
+                                                        <option value="true">True</option>
+                                                        <option value="false">False</option>
+                                                      </select></div>
+                                                </div>
+                                                <div class="style-96">
+                                                    <p class="style-97">Based on Date</p>
+                                                    <div class="style-97"><select id="Based_on_Date"   class="style-94" name="Based_on_Date" required>
+                                                        <option value="true">True</option>
+                                                        <option value="false">False</option>
+                                                      </select></div>
+                                                </div>
+                                                <div class="style-92">
+                                                    <p class="style-93">Count of Users</p>
+                                                    <div class="style-94"><input name="Count" placeholder="Count of Users" type="text" class="style-95" value="" /></div>
+                                                </div>
+                                                <div class="style-92">
+                                                    <p class="style-93">Number of Dates</p>
+                                                    <div class="style-94"><input name="Number_of_Dates" placeholder="Number of Dates" type="text" class="style-95" value="" /></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class=""><button class="style-100" tabindex="0" type="submit">Save<span class="style-101"></span></button></div>
+                                    </form>
+                                    <div class="style-102"></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div class="style-148" role="heading" aria-level="1">
+                        <div class="style-149">
+                            <h4 class="style-150">Coupons</h4>
+                        </div>
+                        <div class="style-151"></div>
+                        <div class="style-152">
+                            <div class="style-153"></div>
+                            <div class="style-154"></div>
+                        </div>
+                    </div>
+                    <header class="style-155">
+                        <div class="style-156"><button class="style-157" tabindex="0" type="button"><svg class="style-158" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="RefreshIcon">
+                                    <path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4z" class=""></path>
+                                </svg><span class="style-159"></span></button>
+                            <div class="style-160"><input id="searchInput" placeholder="Search" type="text" class="style-161" value="" />
+                                <div class="style-162"><svg class="style-163" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="SearchIcon">
+                                        <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14" class=""></path>
+                                    </svg></div>
+                            </div>
+                        </div>
+                    </header>
+                    <div class="style-164">
+                        <div class="style-165">
+                            <div class="style-166" role="table">
+                                <div class="style-167" role="rowgroup">
+                                    <div class="style-168" role="row">
+                                        <div class="style-169">
+                                            <div role="columnheader" tabindex="0" class="style-170">
+                                                <div class="">Code</div><span class="style-171">▲</span>
+                                            </div>
+                                        </div>
+                                        <div class="style-172">
+                                            <div role="columnheader" tabindex="0" class="style-173">
+                                                <div class="">Discount</div><span class="style-174">▲</span>
+                                            </div>
+                                        </div>
+                                        <div class="style-175">
+                                            <div role="columnheader" tabindex="0" class="style-176">
+                                                <div class="">Status</div>
+                                            </div>
+                                        </div>
+                                        <div class="style-175">
+                                            <div role="columnheader" tabindex="0" class="style-176">
+                                                <div class="">Used Count</div>
+                                            </div>
+                                        </div>
+                                        <div class="style-175">
+                                            <div role="columnheader" tabindex="0" class="style-176">
+                                                <div class="">Valid Until</div>
+                                            </div>
+                                        </div>
+                                        <div class="style-177">
+                                            <div role="columnheader" tabindex="0" class="style-178">
+                                                <div class="">Action</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div offset="250px" class="style-179" role="rowgroup">
+                                    
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="">
+                        <nav class="style-350"><span class="style-351" id="rows-per-page">Rows per page:</span>
+                            <div class="style-352"><select aria-label="Rows per page:" class="style-353">
+                                    <option value="10" selected="" class="style-354">10</option>
+                                    <option value="15" class="style-355">15</option>
+                                    <option value="20" class="style-356">20</option>
+                                    <option value="25" class="style-357">25</option>
+                                    <option value="30" class="style-358">30</option>
+                                </select><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="style-359">
+                                    <path d="M7 10l5 5 5-5z" class=""></path>
+                                    <path d="M0 0h24v24H0z" fill="none" class=""></path>
+                                </svg></div><span class="style-360">1-10 of 46</span>
+                            <div class="style-361"><button type="button" aria-label="First Page" aria-disabled="true" disabled="" class="style-362"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" role="presentation" class="">
+                                        <path d="M18.41 16.59L13.82 12l4.59-4.59L17 6l-6 6 6 6zM6 6h2v12H6z" class=""></path>
+                                        <path fill="none" d="M24 24H0V0h24v24z" class=""></path>
+                                    </svg></button><button type="button" aria-label="Previous Page" aria-disabled="true" disabled="" class="style-363"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" role="presentation" class="">
+                                        <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" class=""></path>
+                                        <path d="M0 0h24v24H0z" fill="none" class=""></path>
+                                    </svg></button><button type="button" aria-label="Next Page" aria-disabled="false" class="style-364"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" role="presentation" class="">
+                                        <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" class=""></path>
+                                        <path d="M0 0h24v24H0z" fill="none" class=""></path>
+                                    </svg></button><button type="button" aria-label="Last Page" aria-disabled="false" class="style-365"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" role="presentation" class="">
+                                        <path d="M5.59 7.41L10.18 12l-4.59 4.59L7 18l6-6-6-6zM16 6h2v12h-2z" class=""></path>
+                                        <path fill="none" d="M0 0h24v24H0V0z" class=""></path>
+                                    </svg></button></div>
+                        </nav>
+                    </div>
+                </div>
+                <div class="style-366">
+                    <div class="style-367">
+                        <p class="style-368" value="0">©2024</p><a class="style-369" href="" target="_blank" value="1">FOODHUB</a><a class="style-370" href="" target="_blank" value="2">About Us</a><a class="style-371" href="" target="_blank" value="3">Blog</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/ADMIN_dashboard_Coupons.script.js') }}"></script>
+</body>
+
+</html>
