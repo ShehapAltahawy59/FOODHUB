@@ -8,6 +8,7 @@ from firebase_admin import credentials, firestore, storage,auth
 from users.user import User
 import os
 from datetime import datetime, timedelta
+from functools import wraps
 # Initialize Flask app
 app = Flask(__name__)
 
@@ -77,22 +78,6 @@ def home():
     
     return render_template('E_commerc.html',categories=categories,types=types,current_user=current_user)
 
-# @app.route('/randoumnumber')
-# def randoumnumber():
-#     categories_ref = db.collection('categories')
-#     categories = [doc.to_dict() for doc in categories_ref.stream()]
-
-#     for category in categories:
-#         rate_count = f"{round(random.uniform(4, 4.9),1)}"
-#         # Generate a random number between 4 and 4.9
-        
-        
-#         # Update the category with the new rating
-#         categories_ref.document(category["id"]).update({'rate': rate_count})
-
-#         print(f'Updated category {category["id"]} with random rating: {rate_count}')
-    
-
 
 
 @app.route('/categories/<category_id>')
@@ -124,7 +109,7 @@ def load_user(user_id):
         user_doc = query[0]
         user_data = user_doc.to_dict()
         
-        return User(user_id, user_data['email'], user_data['username'],user_data['profile_img'],user_data['phone'],user_data['addresses'])
+        return User(user_id, user_data['email'], user_data['username'],user_data['profile_img'],user_data['phone'],user_data['addresses'],user_data["is_admin"])
     return None
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -133,11 +118,10 @@ def login():
         print("here")
         data = request.get_json()
         email = data.get('email')
-        name = data.get('username')
+        name = data.get('name')
         phone = data.get('phone')
         img = data.get('photoURL')
         uid = data.get('uid')
-
         # Query Firestore to check if user with the email exists
         users_ref = db.collection('users')
         query = users_ref.where('user_id', '==', uid).limit(1).get()
@@ -152,12 +136,15 @@ def login():
                 'phone': [phone],
                 'profile_img': img,
                 'user_id': uid,
-                'addresses': []
+                'addresses': [],
+                'is_admin': False
             })
         
 
         # Log the user in using Flask-Login
-        user_obj = User(uid, email, name,img,phone,[])
+        
+        
+        user_obj = User(uid, email, name,img,phone,[],False)
         login_user(user_obj)
 
         # Redirect to a different page after successful login
@@ -165,6 +152,16 @@ def login():
 
     return render_template('E_commerc_login_page.html')
 
+
+
+def admin_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if not current_user.is_authenticated or not current_user.is_admin:
+            flash('You do not have permission to access this page.', 'error')
+            return redirect(url_for('home'))  # Redirect to a different page
+        return f(*args, **kwargs)
+    return decorated_function
 
 
 @app.route('/logout', methods=['POST'])
@@ -213,6 +210,7 @@ def check_email_exists():
 
 
 @app.route('/Admin_Dashboard')
+@admin_required
 def Admin_Dashboard():
     session.pop('item_cat', None)
     session.pop('item_cat_sub', None)
@@ -292,7 +290,7 @@ def Admin_Dashboard_restaurants():
     return render_template('Admin_DASHBOARD_resturant.html',categories=categories, types=types_ref,item_cat=item_cat, item_cat_sub=item_cat_sub)
 
 
-
+@admin_required
 @app.route('/get_categories', methods=['GET'])
 def get_categories():
     # Get the pagination parameters from the request
@@ -320,7 +318,7 @@ def get_categories():
         'total_categories': total_categories,
     })
 
-
+@admin_required
 @app.route('/search_in_categories')
 def search_in_categories():
     search_query = request.args.get('search', '').lower()
@@ -346,6 +344,7 @@ def search_in_categories():
 
 
 ############################
+@admin_required
 @app.route('/Admin_Dashboard/riders')
 def Admin_Dashboard_riders():
     categories_ref = db.collection('constants')
@@ -353,7 +352,7 @@ def Admin_Dashboard_riders():
     riders = [category for category in categories ]
     return render_template('Admin_DASHBOARD_riders.html',current_user=current_user,riders=riders[0]['delivery_men'])
 
-
+@admin_required
 @app.route('/add_delivery_men', methods=['GET', 'POST'])
 def add_delivery_men():
     if request.method == 'POST':
@@ -374,6 +373,8 @@ def add_delivery_men():
         return redirect(url_for('add_delivery_men'))
     return render_template('Admin_DASHBOARD_riders.html')
 
+
+@admin_required
 @app.route('/get_riders', methods=['GET'])
 def get_riders():
     # Get the pagination parameters from the request
@@ -405,6 +406,7 @@ def get_riders():
     })
 
 
+@admin_required
 @app.route('/search_in_riders')
 def search_in_riders():
     search_query = request.args.get('search', '').lower()
@@ -435,6 +437,7 @@ def search_in_riders():
 
 
 ################################################3
+@admin_required
 @app.route('/Admin_Dashboard/resturant/items')
 def Resturant_items():
     categories_ref = db.collection('categories')
@@ -443,7 +446,7 @@ def Resturant_items():
     items = [doc.to_dict() for doc in items_ref.get()]
     return render_template('ADMIN_dashboard_resturant_items.html',categories=categories,items=items)
 
-
+@admin_required
 @app.route('/get_subcategories/<category_id>')
 def get_subcategories(category_id):
     category_doc = db.collection('categories').document(category_id).get()
@@ -455,7 +458,7 @@ def get_subcategories(category_id):
         return jsonify({'subcategories': []})
 
 
-
+@admin_required
 @app.route('/add_item', methods=['POST'])
 def add_item():
     
@@ -536,7 +539,7 @@ def add_item():
         
         return redirect(url_for('Resturant_items'))
 
-
+@admin_required
 @app.route('/get_items', methods=['GET'])
 def get_items():
     # Get the pagination parameters from the request
@@ -572,7 +575,7 @@ def parse_discount(value):
 
 
 #######################
-
+@admin_required
 @app.route('/Admin_Dashboard/Orders')
 def Admin_Dashboard_Orders():
     Orders_ref = db.collection('orders')
@@ -581,6 +584,7 @@ def Admin_Dashboard_Orders():
     return render_template('ADMIN_dashboard_orders.html',Orders=Orders)
 
 ######################################
+@admin_required
 @app.route('/Admin_Dashboard/Coupons')
 def Admin_Dashboard_Coupons():
     Coupons_ref = db.collection('Coupons')
@@ -588,7 +592,7 @@ def Admin_Dashboard_Coupons():
     
     return render_template('ADMIN_dashboard_Coupons.html',Coupons=Coupons)
 
-
+@admin_required
 @app.route('/Admin_Dashboard/add_Coupons', methods=['POST'])
 def add_Coupons():
     if request.method == 'POST':
@@ -618,7 +622,7 @@ def add_Coupons():
         return  redirect(url_for('Admin_Dashboard_restaurants'))
 
 
-
+@admin_required
 @app.route('/get_Coupons', methods=['GET'])
 def get_Coupons():
     # Get the pagination parameters from the request
@@ -646,6 +650,8 @@ def get_Coupons():
         'total_Coupons': total_Coupons,
     })
 
+
+@admin_required
 @app.route('/search_in_Coupons')
 def search_in_Coupons():
     search_query = request.args.get('search', '').lower()
@@ -673,6 +679,7 @@ def search_in_Coupons():
 
 
 ##################################
+@admin_required
 @app.route('/Admin_Dashboard/Delivary_Rates')
 def Admin_Dashboard_Delivary_Rates():
     categories_ref = db.collection('constants')
