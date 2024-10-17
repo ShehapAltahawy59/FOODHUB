@@ -2371,6 +2371,7 @@
 }
 
 .style-187 {
+    pointer-events: none;
     user-select: none;
     width: 1em;
     height: 20px;
@@ -5620,4 +5621,35 @@
     margin-bottom: 15px;       /* Space below the div */
     border-radius: 4px;        /* Rounded corners */
     background-color: #fff;    /* Background color */
+}
+
+
+.dropdown-menu {
+    background: white;
+    border: 1px solid #ccc;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    z-index: 10;
+}
+
+.dropdown-menu button {
+    background: none;
+    border: none;
+    padding: 8px;
+    cursor: pointer;
+    text-align: left;
+}
+
+.dropdown-menu button:hover {
+    background-color: #eee;
+}
+
+.save-btn {
+    height: 60%;
+    background-color: green;
+    color: white;
+    border-radius: 8%;
+    cursor: pointer;
+    
 }

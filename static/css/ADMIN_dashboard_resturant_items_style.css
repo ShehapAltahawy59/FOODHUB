@@ -29700,6 +29700,7 @@
 }
 
 .style-2359 {
+    pointer-events: none;
     user-select: none;
     width: 1em;
     height: 20px;
@@ -32272,3 +32273,35 @@
     border-color: #0066cc;
     box-shadow: 0 0 5px rgba(0, 102, 204, 0.5);
 }
+
+
+.dropdown-menu {
+    background: white;
+    border: 1px solid #ccc;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    z-index: 10;
+}
+
+.dropdown-menu button {
+    background: none;
+    border: none;
+    padding: 8px;
+    cursor: pointer;
+    text-align: left;
+}
+
+.dropdown-menu button:hover {
+    background-color: #eee;
+}
+
+.save-btn {
+    height: 60%;
+    background-color: green;
+    color: white;
+    border-radius: 8%;
+    cursor: pointer;
+    
+}
+

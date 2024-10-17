@@ -424,10 +424,10 @@ def search_in_riders():
     start = (current_page - 1) * rows_per_page
     end = start + rows_per_page
     paginated_riders = filtered_riders[start:end]
-
+    print(paginated_riders[0])
     return jsonify({
-        'categories': paginated_riders,
-        'total_categories': total_riders,
+        'riders': paginated_riders,
+        'total_riders': total_riders,
         'total_pages': ceil(total_riders / rows_per_page)
     })
 
@@ -565,6 +565,29 @@ def get_items():
         'current_page': current_page,
         'total_pages': total_pages,
         'total_items': total_items,
+    })
+
+@admin_required
+@app.route('/search_in_items')
+def search_in_items():
+    search_query = request.args.get('search', '').lower()
+    rows_per_page = int(request.args.get('rows_per_page', 10))
+    current_page = int(request.args.get('current_page', 1))
+    items = db.collection('items').get()
+    items=[cat.to_dict() for cat in items]
+    # Filter categories by search_query
+    filtered_items = [cat for cat in items if search_query in cat['name_en'].lower()]
+
+    # Apply pagination (if needed)
+    total_items = len(filtered_items)
+    start = (current_page - 1) * rows_per_page
+    end = start + rows_per_page
+    paginated_items = filtered_items[start:end]
+
+    return jsonify({
+        'items': paginated_items,
+        'total_items': total_items,
+        'total_pages': ceil(total_items / rows_per_page)
     })
 
 def parse_discount(value):
