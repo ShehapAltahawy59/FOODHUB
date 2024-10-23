@@ -17,21 +17,24 @@ function fetchCoupons(page = currentPage) {
                 tableBody.innerHTML += `
                 
                 <div role="row" class="style-180">
-                                        <div role="gridcell" data-tag="allowRowEvents" class="style-181">
-                                            <div data-tag="allowRowEvents" class="style-182">${Coupon.code}</div>
-                                        </div>
-                                        <div role="gridcell" data-tag="allowRowEvents" class="style-183">
-                                            <div data-tag="allowRowEvents" class="style-184">${Coupon.discount}</div>
-                                        </div>
-                                        <div role="gridcell" data-tag="allowRowEvents" class="style-183">
-                                            <div data-tag="allowRowEvents" class="style-184">${Coupon.is_valid}</div>
-                                        </div>
-                                        <div role="gridcell" data-tag="allowRowEvents" class="style-183">
-                                            <div data-tag="allowRowEvents" class="style-184">${Coupon.count}</div>
-                                        </div>
-                                        <div role="gridcell" data-tag="allowRowEvents" class="style-183">
-                                            <div data-tag="allowRowEvents" class="style-184">${Coupon.end_date}</div>
-                                        </div>
+                <div role="gridcell" data-tag="allowRowEvents" class="style-181">
+                <div data-tag="allowRowEvents" class="style-182">${Coupon.code}</div>
+            </div>
+            <div role="gridcell" data-tag="allowRowEvents" class="style-183">
+                <div data-tag="allowRowEvents" class="style-184">${Coupon.discount}</div>
+            </div>
+            <div role="gridcell" data-tag="allowRowEvents" class="style-183">
+                <div data-tag="allowRowEvents" class="style-184">${Coupon.count}</div>
+            </div>
+            <div role="gridcell" data-tag="allowRowEvents" class="style-183">
+                <div data-tag="allowRowEvents" class="style-184">${Coupon.end_date}</div>
+            </div>
+            <div role="gridcell" data-tag="allowRowEvents" class="style-183">
+                <div data-tag="allowRowEvents" class="style-184">${Coupon.for_all_res}</div>
+            </div>
+            <div role="gridcell" data-tag="allowRowEvents" class="style-183">
+                <div data-tag="allowRowEvents" class="style-184">${Coupon.offer_in_total}</div>
+            </div>
                                 
                                         <div role="gridcell" data-tag="allowRowEvents" class="style-192">
                                             <div class=""><button class="style-193" tabindex="0" type="button" aria-label="more" aria-haspopup="true"><svg class="style-194" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="MoreVertIcon">
@@ -146,7 +149,7 @@ searchInput.addEventListener('input', function () {
 
             // Loop through the filtered categories and display them
             data.Coupons.forEach(Coupon => {
-                if (Coupons.code.toLowerCase().includes(searchValue)) {  // Filter by name
+                if (Coupon.code.toLowerCase().includes(searchValue)) {  // Filter by name
                     tableBody.innerHTML += `
                     <div role="row" class="style-180">
                     <div role="gridcell" data-tag="allowRowEvents" class="style-181">
@@ -156,13 +159,16 @@ searchInput.addEventListener('input', function () {
                         <div data-tag="allowRowEvents" class="style-184">${Coupon.discount}</div>
                     </div>
                     <div role="gridcell" data-tag="allowRowEvents" class="style-183">
-                        <div data-tag="allowRowEvents" class="style-184">${Coupon.is_valid}</div>
-                    </div>
-                    <div role="gridcell" data-tag="allowRowEvents" class="style-183">
                         <div data-tag="allowRowEvents" class="style-184">${Coupon.count}</div>
                     </div>
                     <div role="gridcell" data-tag="allowRowEvents" class="style-183">
                         <div data-tag="allowRowEvents" class="style-184">${Coupon.end_date}</div>
+                    </div>
+                    <div role="gridcell" data-tag="allowRowEvents" class="style-183">
+                        <div data-tag="allowRowEvents" class="style-184">${Coupon.for_all_res}</div>
+                    </div>
+                    <div role="gridcell" data-tag="allowRowEvents" class="style-183">
+                        <div data-tag="allowRowEvents" class="style-184">${Coupon.offer_in_total}</div>
                     </div>
             
                     <div role="gridcell" data-tag="allowRowEvents" class="style-192">

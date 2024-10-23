@@ -633,9 +633,11 @@ def add_Coupons():
             "based_on_date": request.form['Based_on_Date'] == 'true',
             "code": request.form['code'],
             "users":[],
+            "restaurants":[],
             "end_date":end_date,
-            "is_valid":True,
-            "count":int(request.form['Count'])
+            "count":int(request.form['Count']),
+            "offer_in_total": request.form['offer_in_total'] == 'true',
+            "for_all_res":request.form['for_all_res'] == 'true',
         }
 
         doc_ref = db.collection('Coupons').add(new_Coupon)[1]
@@ -693,7 +695,7 @@ def search_in_Coupons():
     paginated_Coupons = filtered_Coupons[start:end]
 
     return jsonify({
-        'categories': paginated_Coupons,
+        'Coupons': paginated_Coupons,
         'total_categories': total_Coupons,
         'total_pages': ceil(total_Coupons / rows_per_page)
     })
