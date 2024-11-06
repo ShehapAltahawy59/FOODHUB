@@ -729,7 +729,7 @@ def get_firebase_config():
     return jsonify(firebase_config)
 
 
-
+#id:count:size::totalprice
 
 if __name__ == '__main__':
     app.run(debug=True)

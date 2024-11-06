@@ -6,9 +6,19 @@ function addToCart(item) {
     
     // Check if the cart already exists in localStorage
     let _cart = JSON.parse(localStorage.getItem('cart')) || [];
-
+    var sizeDropdown = document.getElementById(`size-${item.id}`); // Get the dropdown
+    
     // Check if the item already exists in the cart
-    const existingItem = _cart.find(cartItem => cartItem.id === item.id);
+
+    if (sizeDropdown)
+        
+        var selectedSize = sizeDropdown.options[sizeDropdown.selectedIndex].value;
+        item["size_name"]=selectedSize.split(":")[0]
+        item["price"]=String(parseFloat(item["price"]) + parseFloat(selectedSize.split(":")[1]))
+        
+
+
+    const existingItem = _cart.find(cartItem => cartItem.id === item.id && cartItem.size_name === item.size_name);
     console.log(existingItem);
     if (existingItem) {
         // If item exists, update its quantity

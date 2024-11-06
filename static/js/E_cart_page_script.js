@@ -108,6 +108,9 @@ function displayCart() {
                                                 <div class="">
                                                     <p class="style-291"> $ ${item.price}</p>
                                                 </div>
+                                                <div class="">
+                                                    <p class="style-291"> (${item.size_name})</p>
+                                                </div>
                                             </div>
                                         </div>          
         `
@@ -189,8 +192,24 @@ function palceorder(){
              const userDoc = querySnapshot.docs[0].data();
              
              let items = [];
+             SubTotal=0;
         cart.forEach(item => {
             
+            db.collection("items").where("item_id", "==", item.id).get().then((querySnapshot) => {
+                if (!querySnapshot.empty) {
+                    
+                    querySnapshot=querySnapshot.docs[0].data();
+                    
+                    if(item.size_name){
+                        
+                        const sizeIndex = querySnapshot.sizes.name_ar.indexOf(item.size_name);
+                        item.price = String(parseFloat(querySnapshot.priceafterdiscount) + parseFloat(querySnapshot.sizes.price[sizeIndex]));
+                        console.log(item.price);
+                    } 
+                    
+                }});
+                SubTotal += item.price*item.quantity
+                
             items.push(item)
             
         });
@@ -204,7 +223,7 @@ function palceorder(){
         phone:"",
         },
         deliveryCost:12,
-        itemsinorder:items.map(item => `${item.id}:${item.quantity}`),
+        itemsinorder:items.map(item => `${item.id}:${item.quantity}::${item.size_name}`),
         lat:"30.5419389",
         long:"31.1385597",
         notes:"",

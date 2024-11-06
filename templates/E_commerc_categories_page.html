@@ -122,7 +122,20 @@
                                                         <span class="style-81">$ item.price</span>
                                                         {%endif%}
                                                     </p>
+                                                    
+                                                    {% if item.sizes != {} %}
+                                                    <label for="size" class="size-label">Choose Size</label>
+                                                    <select id="size-{{ item.item_id }}" class="size-dropdown">
+                                                        {% for i in range(item.sizes.name_ar|length) %}
+                                                        <option value="{{ item.sizes.name_ar[i]}}:{{item.sizes.price[i]}}">
+                                                            {{ item.sizes.name_ar[i] }} - ${{ item.sizes.price[i] }}
+                                                        </option>
+                                                        {% endfor %}
+                                                    </select>
+                                                    {% endif %}
+                                                    
                                                 </div>
+                                                
                                                 <div class="style-82" style="background-image: url({{item.item_image[0]}});">
                                                     <button onclick="addToCart(  {
                                                              id: '{{item.item_id}}',
@@ -130,11 +143,15 @@
                                                              resturant_id : '{{category.id}}',
                                                              name: '{{item.name_en}}',
                                                              price: '{{item.priceafterdiscount}}',
-                                                             quantity: 1
+                                                             quantity: 1,
+                                                             
                                                          })" class="style-83" tabindex="0" type="button"><svg class="style-84" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="AddIcon">
                                                             <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6z" class=""></path>
                                                         </svg><span class="style-85"></span></button></div>
-                                            </div>
+                                            
+                                                        
+                                                    </div>
+                                            
                                         </div>
                                         {%endif%}
                                         {%endfor%}

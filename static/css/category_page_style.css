@@ -859,3 +859,35 @@ card_style-23 {
     margin-right: auto;
     display: block;
 }
+
+.size-dropdown {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    background-color: #f4f4f9;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    color: #333;
+    font-family: Arial, sans-serif;
+    transition: background-color 0.3s ease;
+}
+
+.size-dropdown:hover {
+    background-color: #e0e0e0;
+}
+
+.size-dropdown option {
+    padding: 10px;
+    font-size: 14px;
+}
+
+.size-dropdown option:hover {
+    background-color: #ddd;
+}
+
+.size-label {
+    font-weight: bold;
+    margin-bottom: 8px;
+    display: block;
+    color: #333;
+}
