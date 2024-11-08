@@ -4,6 +4,15 @@
     <link rel="icon" href="/static/images/icon.png" type="image/jpg">
     <title>FoodHub Dashboard</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/ADMIN_dashboard_deliveryrates_style.css') }}">
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+
+    <!-- Firebase Authentication -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+
+    <!-- Firebase Firestore -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="{{ url_for('static', filename='js/firebase_init.js') }}"></script>
 </head>
 
 <body class="style-0">
