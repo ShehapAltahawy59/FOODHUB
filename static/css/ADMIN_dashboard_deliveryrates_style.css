@@ -1167,3 +1167,27 @@
     font: 16px Inter;
     text-decoration: none solid rgb(148, 147, 147);
 }
+
+
+.style-dropdown {
+    font-size: 14px;
+    font-family: Inter, 'Open Sans', sans-serif;
+    color: rgb(90, 88, 88);
+    padding: 5px 10px;
+    margin-left: 10px;
+    border: 1px solid rgb(245, 245, 245);
+    border-radius: 15px;
+    background-color: rgb(255, 255, 255);
+    box-shadow: rgba(0, 0, 0, 0.06) 0px 2px 8px;
+    cursor: pointer;
+    outline: none;
+    transition: background-color 0.25s, box-shadow 0.25s;
+}
+
+.style-dropdown:hover {
+    background-color: rgb(240, 240, 240);
+}
+
+.style-dropdown:focus {
+    box-shadow: 0 0 5px rgba(144, 234, 147, 0.5);
+}

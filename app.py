@@ -714,6 +714,56 @@ def Admin_Dashboard_Delivary_Rates():
     Delivary_Rates=Delivary_Rates[0]["delivery"]["قويسنا"]
     return render_template('ADMIN_dashboard_Delivary_Rates.html',Delivary_Rates=Delivary_Rates)
 
+@admin_required
+@app.route('/Admin_Dashboard/get_Delivary_Rates')
+def Admin_Dashboard_get_Delivary_Rates():
+    search_query = request.args.get('search', '').lower()
+    if (search_query == "quweisna"):
+        categories_ref = db.collection('constants')
+        categories = [doc.to_dict() for doc in categories_ref.get()]
+        Delivary_Rates = [category for category in categories ]
+        Delivary_Rates=Delivary_Rates[0]["delivery"]["قويسنا"]
+    elif(search_query == "sheben" ):
+        categories_ref = db.collection('constants')
+        categories = [doc.to_dict() for doc in categories_ref.get()]
+        Delivary_Rates = [category for category in categories ]
+        Delivary_Rates=Delivary_Rates[0]["delivery_shbeen"]["قويسنا"]
+    elif(search_query == "banha" ):
+        categories_ref = db.collection('constants')
+        categories = [doc.to_dict() for doc in categories_ref.get()]
+        Delivary_Rates = [category for category in categories ]
+        Delivary_Rates=Delivary_Rates[0]["delivery_banha"]["قويسنا"]
+    return jsonify({
+        'Delivary_Rates': Delivary_Rates,
+    })
+
+@admin_required
+@app.route('/Admin_Dashboard/update_Delivary_Rate' ,methods=['GET', 'POST'])
+def update_Delivary_Rate():
+    data = request.get_json()
+    
+    key = data.get("key")  # Location
+    new_rate = data.get("rate")  # Updated rate
+    rate_type = data.get('where')
+    delivery_rates_doc_ref = db.collection('constants').document('KBduReQFSnQFL4J18xBo')
+    if (rate_type == "quweisna"):
+        rate_type="delivery"
+    elif(rate_type == "sheben" ):
+        rate_type="delivery_shbeen"
+    elif(rate_type == "banha" ):
+        rate_type="delivery_banha"
+        
+    update_path = f"{rate_type}.قويسنا.{key}"
+    try:
+        # Update the specific location's rate in Firestore
+        delivery_rates_doc_ref.update({update_path: float(new_rate)})
+        return jsonify({"success": True, "message": "Rate updated successfully!"})
+    except Exception as e:
+        return jsonify({"success": False, "message": f"Failed to update rate: {str(e)}"}), 500
+
+
+
+
 ###############################################
 
 @admin_required
