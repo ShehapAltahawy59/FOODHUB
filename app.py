@@ -752,7 +752,7 @@ def update_Delivary_Rate():
         rate_type="delivery_shbeen"
     elif(rate_type == "banha" ):
         rate_type="delivery_banha"
-        
+    print("here")
     update_path = f"{rate_type}.قويسنا.{key}"
     try:
         # Update the specific location's rate in Firestore
