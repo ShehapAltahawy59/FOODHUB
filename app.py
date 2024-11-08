@@ -713,6 +713,95 @@ def Admin_Dashboard_Delivary_Rates():
     Delivary_Rates=Delivary_Rates[0]["delivery"]["قويسنا"]
     return render_template('ADMIN_dashboard_Delivary_Rates.html',Delivary_Rates=Delivary_Rates)
 
+###############################################
+
+@admin_required
+@app.route('/Admin_Dashboard/login_wadely')
+def Admin_Dashboard_wadely():
+    categories_ref = db.collection('constants')
+    categories = [doc.to_dict() for doc in categories_ref.get()]
+    login_wadely = [category for category in categories ]
+    return render_template('Admin_DASHBOARD_wadely.html',current_user=current_user,riders=login_wadely[0]['login_wadely'])
+
+@admin_required
+@app.route('/add_login_wadely', methods=['GET', 'POST'])
+def add_login_wadely():
+    if request.method == 'POST':
+        users_ref = db.collection('constants')
+        docs = users_ref.get()
+        user_docs = [doc for doc in docs]
+        login_wadely = user_docs[0].to_dict()["login_wadely"]
+        login_wadely_1 = {
+            "active": True,
+            "name": request.form['name'],
+            "password": request.form['password'],
+            "phone": request.form['phone'],
+            "total_orders": 0,
+            "address":request.form['address']
+        }
+        login_wadely.append(login_wadely_1)
+        user_docs[0].reference.update({"login_wadely": login_wadely})
+        flash('Delivery man added successfully!', 'success')
+        return redirect(url_for('add_login_wadely'))
+    return render_template('Admin_DASHBOARD_wadely.html')
+
+
+@admin_required
+@app.route('/get_login_wadely', methods=['GET'])
+def get_login_wadely():
+    # Get the pagination parameters from the request
+    rows_per_page = int(request.args.get('rows_per_page', 10))  # Default to 10 rows
+    current_page = int(request.args.get('current_page', 1))  # Default to the first page
+
+    # Fetch categories from your database (replace this with actual database query)
+    login_wadely_ref = db.collection('constants')
+    login_wadelys = [doc.to_dict() for doc in login_wadely_ref.get()]
+    login_wadely = [login_wadely for login_wadely in login_wadelys ]
+    login_wadely = login_wadely[0]['login_wadely']  # Replace with your database call
+    total_login_wadely = len(login_wadely)  # Get the total number of categories
+
+    # Calculate the start and end index based on current page and rows per page
+    start_index = (current_page - 1) * rows_per_page
+    end_index = start_index + rows_per_page
+    paginated_login_wadely = login_wadely[start_index:end_index]
+
+    # Calculate total number of pages
+    total_pages = ceil(total_login_wadely / rows_per_page)
+    print(total_pages)
+
+    # Return the paginated data along with pagination info
+    return jsonify({
+        'login_wadely': paginated_login_wadely,
+        'current_page': current_page,
+        'total_pages': total_pages,
+        'total_login_wadely': total_login_wadely,
+    })
+
+
+@admin_required
+@app.route('/search_in_login_wadely')
+def search_in_login_wadely():
+    search_query = request.args.get('search', '').lower()
+    rows_per_page = int(request.args.get('rows_per_page', 10))
+    current_page = int(request.args.get('current_page', 1))
+    login_wadely_ref = db.collection('constants')
+    login_wadelys = [doc.to_dict() for doc in login_wadely_ref.get()]
+    login_wadelys = [ride for ride in login_wadelys ]
+    login_wadelys = login_wadelys[0]['login_wadely']
+    # Filter categories by search_query
+    filtered_login_wadely = [login_wadely for login_wadely in login_wadelys if search_query in login_wadely['name'].lower()]
+
+    # Apply pagination (if needed)
+    total_login_wadely = len(filtered_login_wadely)
+    start = (current_page - 1) * rows_per_page
+    end = start + rows_per_page
+    paginated_login_wadely = filtered_login_wadely[start:end]
+    print(paginated_login_wadely[0])
+    return jsonify({
+        'login_wadelys': paginated_login_wadely,
+        'total_login_wadely': total_login_wadely,
+        'total_pages': ceil(total_login_wadely / rows_per_page)
+    })
 
 
 

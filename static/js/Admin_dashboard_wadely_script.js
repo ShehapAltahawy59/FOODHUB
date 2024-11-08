@@ -2,49 +2,49 @@ let currentPage = 1;
 let rowsPerPage = 10;  // Define rows per page
 let totalPages = 1; // Start with 1 to avoid issues before data is loaded
 let totalItems = 0; 
-function fetchriders(page = currentPage) {
+function fetchlogin_wadelys(page = currentPage) {
     // Make an AJAX request to the backend to get the categories for the current page
-    fetch(`/get_riders?rows_per_page=${rowsPerPage}&current_page=${page}`)
+    fetch(`/get_login_wadely?rows_per_page=${rowsPerPage}&current_page=${page}`)
         .then(response => response.json())
         .then(data => {
-            totalItems = data.total_riders; 
+            totalItems = data.total_login_wadely; 
             // Update the table with the fetched data
             const tableBody = document.querySelector('.style-164');
             tableBody.innerHTML = '';  // Clear the previous table rows
 
             
             // Populate the table with new categories
-            data.riders.forEach(rider => {
+            data.login_wadely.forEach(login_wadely => {
                 
                     const row = document.createElement('div');
                     row.classList.add('style-165');
                     row.setAttribute('role', 'row');
-                    row.setAttribute('data-category-id', rider.phone);
+                    row.setAttribute('data-category-id', login_wadely.phone);
                     row.innerHTML += `
-                            <div id=name${rider.phone} role="gridcell" class="style-168"><div>${rider.name}</div></div>
-                            <div id=password${rider.phone} role="gridcell" class="style-170"><div>${rider.password}</div></div>
-                            <div id=phone${rider.phone} role="gridcell" class="style-172"><div>${rider.phone}</div></div>
-                            <div id=active${rider.phone} role="gridcell" class="style-174"><div>${rider.active}</div></div>
-                            <div id=unpaid${rider.phone} role="gridcell" class="style-176"><div>${rider.unpaid}</div></div>
-                            
+                            <div id=name${login_wadely.phone} role="gridcell" class="style-168"><div>${login_wadely.name}</div></div>
+                            <div id=password${login_wadely.phone} role="gridcell" class="style-170"><div>${login_wadely.password}</div></div>
+                            <div id=phone${login_wadely.phone} role="gridcell" class="style-172"><div>${login_wadely.phone}</div></div>
+                            <div id=active${login_wadely.phone} role="gridcell" class="style-174"><div>${login_wadely.active}</div></div>
+                            <div id=total_orders${login_wadely.phone} role="gridcell" class="style-176"><div>${login_wadely.total_orders}</div></div>
+                            <div id=address${login_wadely.phone} role="gridcell" class="style-176"><div>${login_wadely.address}</div></div>
                             <div role="gridcell" data-tag="allowRowEvents" class="style-185">
                             <div class="button_div">
-                                <button id="more-btn${rider.phone}" class="style-186 more-btn" tabindex="0" type="button" aria-label="more" aria-haspopup="true">
+                                <button id="more-btn${login_wadely.phone}" class="style-186 more-btn" tabindex="0" type="button" aria-label="more" aria-haspopup="true">
                                     <svg class="style-187" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="MoreVertIcon">
                                         <path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2m0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2"></path>
                                     </svg>
                                 </button>
-                                <div id="dropdown-menu${rider.phone}" class="dropdown-menu" style="display:none; position:absolute;">
-                                    <button id="edit-btn${rider.phone}" class="edit-btn">Edit</button>
-                                    <button id="delete-btn${rider.phone}" class="delete-btn">Delete</button>
+                                <div id="dropdown-menu${login_wadely.phone}" class="dropdown-menu" style="display:none; position:absolute;">
+                                    <button id="edit-btn${login_wadely.phone}" class="edit-btn">Edit</button>
+                                    <button id="delete-btn${login_wadely.phone}" class="delete-btn">Delete</button>
                                 </div>
                             </div>
                         
                     `;
                     tableBody.appendChild(row);
 
-                    const moreBtn = row.querySelector(`#more-btn${rider.phone}`);
-                    const dropdown = row.querySelector(`#dropdown-menu${rider.phone}`);
+                    const moreBtn = row.querySelector(`#more-btn${login_wadely.phone}`);
+                    const dropdown = row.querySelector(`#dropdown-menu${login_wadely.phone}`);
 
                     // Bind click event to the "more" button
                     moreBtn.addEventListener('click', function (event) {
@@ -60,7 +60,7 @@ function fetchriders(page = currentPage) {
                     });
 
                     // Delete button event listener
-                    const deleteBtn = row.querySelector(`#delete-btn${rider.phone}`);
+                    const deleteBtn = row.querySelector(`#delete-btn${login_wadely.phone}`);
                     deleteBtn.addEventListener('click', function () {
                         const confirmDelete = confirm("Are you sure you want to delete this item?");
                         if (confirmDelete) {
@@ -71,14 +71,14 @@ function fetchriders(page = currentPage) {
                                 if (!querySnapshot.empty) {
                                     const doc = querySnapshot.docs[0];
                                     const data = doc.data();
-                                    const deliveryMenMap = data.delivery_men;
+                                    const login_wadelyMap = data.login_wadely;
                         
                                     // Filter out the entry where the name matches ride.name
-                                    const indexToDelete = deliveryMenMap.findIndex(deliveryMan => deliveryMan.name === rider.name);
+                                    const indexToDelete = login_wadelyMap.findIndex(login_wadely_item => login_wadely_item.name === login_wadely.name);
 
                                     if (indexToDelete !== -1) {
                                         // Remove the specific entry from the array
-                                        deliveryMenMap.splice(indexToDelete, 1);
+                                        login_wadelyMap.splice(indexToDelete, 1);
                                     
                                         // Fetch the 'constants' document and update it
                                         firebase.firestore().collection('constants').get().then((querySnapshot) => {
@@ -86,7 +86,7 @@ function fetchriders(page = currentPage) {
                                                 // Assuming there is only one document in 'constants' collection
                                                 const doc = querySnapshot.docs[0];
                                                 doc.ref.update({
-                                                    delivery_men: deliveryMenMap
+                                                    login_wadely: login_wadelyMap
                                                 }).then(() => {
                                                     alert('Record deleted successfully');
                                                     location.reload(); // Reload to see the updated list
@@ -112,17 +112,17 @@ function fetchriders(page = currentPage) {
                     });
 
                     // Edit button event listener
-                    const editBtn = row.querySelector(`#edit-btn${rider.phone}`);
+                    const editBtn = row.querySelector(`#edit-btn${login_wadely.phone}`);
                     editBtn.addEventListener('click', function () {
                         const button_div = row.querySelector('.button_div');
                         button_div.style.display = "none"; // Hide button div to prevent multiple clicks
 
                         // Populate editable fields
-                        const activeCell = row.querySelector(`#active${rider.phone}`);
+                        const activeCell = row.querySelector(`#active${login_wadely.phone}`);
                         activeCell.innerHTML = `
                             <select style="width:100%" id="active-select">
-                                <option value="true" ${rider.active ? 'selected' : ''}>True</option>
-                                <option value="false" ${!rider.active ? 'selected' : ''}>False</option>
+                                <option value="true" ${login_wadely.active ? 'selected' : ''}>True</option>
+                                <option value="false" ${!login_wadely.active ? 'selected' : ''}>False</option>
                             </select>`;
 
 
@@ -146,12 +146,13 @@ function fetchriders(page = currentPage) {
                         // Event listener for the save button
                         saveBtn.addEventListener('click', function () {
                             // Gather updated values
-                            const updatedRider = {
-                                name: row.querySelector(`#name${rider.phone}`).innerText,
-                                active: row.querySelector(`#active${rider.phone}`).value === 'true',
-                                password: row.querySelector(`#password${rider.phone}`).innerText,
-                                phone: row.querySelector(`#phone${rider.phone}`).innerText,
-                                unpaid: row.querySelector(`#unpaid${rider.phone}`).innerText,
+                            const updatedlogin_wadely = {
+                                name: row.querySelector(`#name${login_wadely.phone}`).innerText,
+                                active: row.querySelector(`#active${login_wadely.phone}`).value === 'true',
+                                password: row.querySelector(`#password${login_wadely.phone}`).innerText,
+                                phone: row.querySelector(`#phone${login_wadely.phone}`).innerText,
+                                total_orders: parseFloat(row.querySelector(`#total_orders${login_wadely.phone}`).innerText),
+                                address: row.querySelector(`#address${login_wadely.phone}`).innerText,
                             };
                         
                             // Reference the Firestore document in 'constants' collection
@@ -164,17 +165,17 @@ function fetchriders(page = currentPage) {
                                     const docRef = doc.ref;
                         
                                     // Retrieve the 'delivery_men' array from the document
-                                    let deliveryMenArray = doc.data().delivery_men;
+                                    let login_wadelyArray = doc.data().login_wadely;
                         
                                     // Find the index of the rider to update in the array
-                                    const indexToUpdate = deliveryMenArray.findIndex(item => item.phone === rider.phone);
+                                    const indexToUpdate = login_wadelyArray.findIndex(item => item.phone === login_wadely.phone);
                         
                                     if (indexToUpdate !== -1) {
                                         // Update the specific entry with the new data
-                                        deliveryMenArray[indexToUpdate] = updatedRider;
+                                        login_wadelyArray[indexToUpdate] = updatedlogin_wadely;
                         
                                         // Write the updated array back to Firestore
-                                        docRef.update({ delivery_men: deliveryMenArray })
+                                        docRef.update({ login_wadely: login_wadelyArray })
                                             .then(() => {
                                                 alert('Record updated successfully');
                                                 location.reload(); // Reload the page to see updates
@@ -250,36 +251,36 @@ function updatePagination() {
 document.querySelector('.style-429').addEventListener('click', () => {
     if (currentPage < totalPages) {
         currentPage++;
-        fetchriders(currentPage); // Fetch new data for next page
+        fetchlogin_wadelys(currentPage); // Fetch new data for next page
     }
 });
 
 document.querySelector('.style-428').addEventListener('click', () => {
     if (currentPage > 1) {
         currentPage--;
-        fetchriders(currentPage); // Fetch data for previous page
+        fetchlogin_wadelys(currentPage); // Fetch data for previous page
     }
 });
 
 document.querySelector('.style-427').addEventListener('click', () => {
     currentPage = 1;
-    fetchriders(currentPage); // Fetch first page data
+    fetchlogin_wadelys(currentPage); // Fetch first page data
 });
 
 document.querySelector('.style-430').addEventListener('click', () => {
     currentPage = totalPages;
-    fetchriders(currentPage); // Fetch last page data
+    fetchlogin_wadelys(currentPage); // Fetch last page data
 });
 
 document.getElementById('rows-per-page').addEventListener('change', (event) => {
     rowsPerPage = parseInt(event.target.value, 10);  // Get the new rows per page value
     console.log(rowsPerPage);
     currentPage = 1;  // Reset to the first page after changing rows per page
-    fetchriders(currentPage);  // Fetch new data with updated rows per page
+    fetchlogin_wadelys(currentPage);  // Fetch new data with updated rows per page
 });
 
 // Initialize the pagination state and load first page data
-fetchriders();
+fetchlogin_wadelys();
 
 
 // Get the search input element
@@ -290,7 +291,7 @@ searchInput.addEventListener('input', function () {
     const searchValue = searchInput.value.toLowerCase();  // Get the input value and convert it to lowercase
     console.log(searchValue);
     // Fetch all the categories again (you can use the existing fetch or you can filter client-side data)
-    fetch(`/search_in_riders?search=${searchValue}`)
+    fetch(`/search_in_login_wadely?search=${searchValue}`)
         .then(response => response.json())
         .then(data => {
             // Update the table with the filtered data
@@ -298,37 +299,37 @@ searchInput.addEventListener('input', function () {
             tableBody.innerHTML = '';  // Clear the previous table rows
 
             // Loop through the filtered categories and display them
-            data.riders.forEach(rider => {
-                if (rider.name.toLowerCase().includes(searchValue)) {  // Filter by name
+            data.login_wadelys.forEach(login_wadely => {
+                if (login_wadely.name.toLowerCase().includes(searchValue)) {  // Filter by name
                     const row = document.createElement('div');
                     row.classList.add('style-165');
                     row.setAttribute('role', 'row');
-                    row.setAttribute('data-category-id', rider.phone);
+                    row.setAttribute('data-category-id', login_wadely.phone);
                     row.innerHTML += `
-                            <div id=name${rider.phone} role="gridcell" class="style-168"><div>${rider.name}</div></div>
-                            <div id=password${rider.phone} role="gridcell" class="style-170"><div>${rider.password}</div></div>
-                            <div id=phone${rider.phone} role="gridcell" class="style-172"><div>${rider.phone}</div></div>
-                            <div id=active${rider.phone} role="gridcell" class="style-174"><div>${rider.active}</div></div>
-                            <div id=unpaid${rider.phone} role="gridcell" class="style-176"><div>${rider.unpaid}</div></div>
-                            
-                            <div role="gridcell" data-tag="allowRowEvents" class="style-185">
-                            <div class="button_div">
-                                <button id="more-btn${rider.phone}" class="style-186 more-btn" tabindex="0" type="button" aria-label="more" aria-haspopup="true">
-                                    <svg class="style-187" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="MoreVertIcon">
-                                        <path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2m0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2"></path>
-                                    </svg>
-                                </button>
-                                <div id="dropdown-menu${rider.phone}" class="dropdown-menu" style="display:none; position:absolute;">
-                                    <button id="edit-btn${rider.phone}" class="edit-btn">Edit</button>
-                                    <button id="delete-btn${rider.phone}" class="delete-btn">Delete</button>
-                                </div>
-                            </div>
-                        
-                    `;
+                    <div id=name${login_wadely.phone} role="gridcell" class="style-168"><div>${login_wadely.name}</div></div>
+                    <div id=password${login_wadely.phone} role="gridcell" class="style-170"><div>${login_wadely.password}</div></div>
+                    <div id=phone${login_wadely.phone} role="gridcell" class="style-172"><div>${login_wadely.phone}</div></div>
+                    <div id=active${login_wadely.phone} role="gridcell" class="style-174"><div>${login_wadely.active}</div></div>
+                    <div id=total_orders${login_wadely.phone} role="gridcell" class="style-176"><div>${login_wadely.total_orders}</div></div>
+                    <div id=address${login_wadely.phone} role="gridcell" class="style-176"><div>${login_wadely.address}</div></div>
+                    <div role="gridcell" data-tag="allowRowEvents" class="style-185">
+                    <div class="button_div">
+                        <button id="more-btn${login_wadely.phone}" class="style-186 more-btn" tabindex="0" type="button" aria-label="more" aria-haspopup="true">
+                            <svg class="style-187" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="MoreVertIcon">
+                                <path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2m0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2"></path>
+                            </svg>
+                        </button>
+                        <div id="dropdown-menu${login_wadely.phone}" class="dropdown-menu" style="display:none; position:absolute;">
+                            <button id="edit-btn${login_wadely.phone}" class="edit-btn">Edit</button>
+                            <button id="delete-btn${login_wadely.phone}" class="delete-btn">Delete</button>
+                        </div>
+                    </div>
+                
+            `;
                     tableBody.appendChild(row);
 
-                    const moreBtn = row.querySelector(`#more-btn${rider.phone}`);
-                    const dropdown = row.querySelector(`#dropdown-menu${rider.phone}`);
+                    const moreBtn = row.querySelector(`#more-btn${login_wadely.phone}`);
+                    const dropdown = row.querySelector(`#dropdown-menu${login_wadely.phone}`);
 
                     // Bind click event to the "more" button
                     moreBtn.addEventListener('click', function (event) {
@@ -344,7 +345,7 @@ searchInput.addEventListener('input', function () {
                     });
 
                     // Delete button event listener
-                    const deleteBtn = row.querySelector(`#delete-btn${rider.phone}`);
+                    const deleteBtn = row.querySelector(`#delete-btn${login_wadely.phone}`);
                     deleteBtn.addEventListener('click', function () {
                         const confirmDelete = confirm("Are you sure you want to delete this item?");
                         if (confirmDelete) {
@@ -355,14 +356,14 @@ searchInput.addEventListener('input', function () {
                                 if (!querySnapshot.empty) {
                                     const doc = querySnapshot.docs[0];
                                     const data = doc.data();
-                                    const deliveryMenMap = data.delivery_men;
+                                    const login_wadelyMap = data.login_wadely;
                         
                                     // Filter out the entry where the name matches ride.name
-                                    const indexToDelete = deliveryMenMap.findIndex(deliveryMan => deliveryMan.name === rider.name);
+                                    const indexToDelete = login_wadelyMap.findIndex(login_wadely_item => login_wadely_item.name === login_wadely.name);
 
                                     if (indexToDelete !== -1) {
                                         // Remove the specific entry from the array
-                                        deliveryMenMap.splice(indexToDelete, 1);
+                                        login_wadelyMap.splice(indexToDelete, 1);
                                     
                                         // Fetch the 'constants' document and update it
                                         firebase.firestore().collection('constants').get().then((querySnapshot) => {
@@ -370,7 +371,7 @@ searchInput.addEventListener('input', function () {
                                                 // Assuming there is only one document in 'constants' collection
                                                 const doc = querySnapshot.docs[0];
                                                 doc.ref.update({
-                                                    delivery_men: deliveryMenMap
+                                                    login_wadely: login_wadelyMap
                                                 }).then(() => {
                                                     alert('Record deleted successfully');
                                                     location.reload(); // Reload to see the updated list
@@ -396,17 +397,17 @@ searchInput.addEventListener('input', function () {
                     });
 
                     // Edit button event listener
-                    const editBtn = row.querySelector(`#edit-btn${rider.phone}`);
+                    const editBtn = row.querySelector(`#edit-btn${login_wadely.phone}`);
                     editBtn.addEventListener('click', function () {
                         const button_div = row.querySelector('.button_div');
                         button_div.style.display = "none"; // Hide button div to prevent multiple clicks
 
                         // Populate editable fields
-                        const activeCell = row.querySelector(`#active${rider.phone}`);
+                        const activeCell = row.querySelector(`#active${login_wadely.phone}`);
                         activeCell.innerHTML = `
                             <select style="width:100%" id="active-select">
-                                <option value="true" ${rider.active ? 'selected' : ''}>True</option>
-                                <option value="false" ${!rider.active ? 'selected' : ''}>False</option>
+                                <option value="true" ${login_wadely.active ? 'selected' : ''}>True</option>
+                                <option value="false" ${!login_wadely.active ? 'selected' : ''}>False</option>
                             </select>`;
 
 
@@ -430,12 +431,13 @@ searchInput.addEventListener('input', function () {
                         // Event listener for the save button
                         saveBtn.addEventListener('click', function () {
                             // Gather updated values
-                            const updatedRider = {
-                                name: row.querySelector(`#name${rider.phone}`).innerText,
-                                active: row.querySelector(`#active${rider.phone}`).value === 'true',
-                                password: row.querySelector(`#password${rider.phone}`).innerText,
-                                phone: row.querySelector(`#phone${rider.phone}`).innerText,
-                                unpaid: row.querySelector(`#unpaid${rider.phone}`).innerText,
+                            const updatedlogin_wadely = {
+                                name: row.querySelector(`#name${login_wadely.phone}`).innerText,
+                                active: row.querySelector(`#active${login_wadely.phone}`).value === 'true',
+                                password: row.querySelector(`#password${login_wadely.phone}`).innerText,
+                                phone: row.querySelector(`#phone${login_wadely.phone}`).innerText,
+                                total_orders: parseFloat(row.querySelector(`#total_orders${login_wadely.phone}`).innerText),
+                                address: row.querySelector(`#address${login_wadely.phone}`).innerText,
                             };
                         
                             // Reference the Firestore document in 'constants' collection
@@ -448,17 +450,17 @@ searchInput.addEventListener('input', function () {
                                     const docRef = doc.ref;
                         
                                     // Retrieve the 'delivery_men' array from the document
-                                    let deliveryMenArray = doc.data().delivery_men;
+                                    let login_wadelyArray = doc.data().login_wadely;
                         
                                     // Find the index of the rider to update in the array
-                                    const indexToUpdate = deliveryMenArray.findIndex(item => item.phone === rider.phone);
+                                    const indexToUpdate = login_wadelyArray.findIndex(item => item.phone === login_wadely.phone);
                         
                                     if (indexToUpdate !== -1) {
                                         // Update the specific entry with the new data
-                                        deliveryMenArray[indexToUpdate] = updatedRider;
+                                        login_wadelyArray[indexToUpdate] = updatedlogin_wadely;
                         
                                         // Write the updated array back to Firestore
-                                        docRef.update({ delivery_men: deliveryMenArray })
+                                        docRef.update({ login_wadely: login_wadelyArray })
                                             .then(() => {
                                                 alert('Record updated successfully');
                                                 location.reload(); // Reload the page to see updates
