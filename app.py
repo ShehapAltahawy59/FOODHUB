@@ -708,11 +708,7 @@ def search_in_Coupons():
 @admin_required
 @app.route('/Admin_Dashboard/Delivary_Rates')
 def Admin_Dashboard_Delivary_Rates():
-    categories_ref = db.collection('constants')
-    categories = [doc.to_dict() for doc in categories_ref.get()]
-    Delivary_Rates = [category for category in categories ]
-    Delivary_Rates=Delivary_Rates[0]["delivery"]["قويسنا"]
-    return render_template('ADMIN_dashboard_Delivary_Rates.html',Delivary_Rates=Delivary_Rates)
+    return render_template('ADMIN_dashboard_Delivary_Rates.html')
 
 @admin_required
 @app.route('/Admin_Dashboard/get_Delivary_Rates')
@@ -733,6 +729,7 @@ def Admin_Dashboard_get_Delivary_Rates():
         categories = [doc.to_dict() for doc in categories_ref.get()]
         Delivary_Rates = [category for category in categories ]
         Delivary_Rates=Delivary_Rates[0]["delivery_banha"]["قويسنا"]
+    print("here")
     return jsonify({
         'Delivary_Rates': Delivary_Rates,
     })
@@ -752,7 +749,7 @@ def update_Delivary_Rate():
         rate_type="delivery_shbeen"
     elif(rate_type == "banha" ):
         rate_type="delivery_banha"
-    print("here")
+    
     update_path = f"{rate_type}.قويسنا.{key}"
     try:
         # Update the specific location's rate in Firestore
