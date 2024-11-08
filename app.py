@@ -266,6 +266,7 @@ def Admin_Dashboard_restaurants():
             "order": request.form['order'] == 'true',
             "password": request.form['password'],
             "patener": request.form['patener'] == 'true',
+            "where":request.form['where'],
             "pop": request.form['pop'],
             "rate": request.form['rate'],
             "rate_count":rate_count,
