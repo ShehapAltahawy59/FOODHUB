@@ -120,7 +120,7 @@ function fetchriders(page = currentPage) {
                         // Populate editable fields
                         const activeCell = row.querySelector(`#active${rider.phone}`);
                         activeCell.innerHTML = `
-                            <select style="width:100%" id="active-select">
+                            <select style="width:100%" id=active_selected${rider.phone}>
                                 <option value="true" ${rider.active ? 'selected' : ''}>True</option>
                                 <option value="false" ${!rider.active ? 'selected' : ''}>False</option>
                             </select>`;
@@ -148,12 +148,12 @@ function fetchriders(page = currentPage) {
                             // Gather updated values
                             const updatedRider = {
                                 name: row.querySelector(`#name${rider.phone}`).innerText,
-                                active: row.querySelector(`#active${rider.phone}`).value === 'true',
+                                active: row.querySelector(`#active_selected${rider.phone}`).value === 'true',
                                 password: row.querySelector(`#password${rider.phone}`).innerText,
                                 phone: row.querySelector(`#phone${rider.phone}`).innerText,
                                 unpaid: row.querySelector(`#unpaid${rider.phone}`).innerText,
                             };
-                        
+                            console.log(row.querySelector(`#active_selected${rider.phone}`).value);
                             // Reference the Firestore document in 'constants' collection
                             const db = firebase.firestore();
                             const constantsRef = db.collection('constants').limit(1);
@@ -404,7 +404,7 @@ searchInput.addEventListener('input', function () {
                         // Populate editable fields
                         const activeCell = row.querySelector(`#active${rider.phone}`);
                         activeCell.innerHTML = `
-                            <select style="width:100%" id="active-select">
+                            <select style="width:100%" id="active_selected${rider.phone}">
                                 <option value="true" ${rider.active ? 'selected' : ''}>True</option>
                                 <option value="false" ${!rider.active ? 'selected' : ''}>False</option>
                             </select>`;
@@ -432,7 +432,7 @@ searchInput.addEventListener('input', function () {
                             // Gather updated values
                             const updatedRider = {
                                 name: row.querySelector(`#name${rider.phone}`).innerText,
-                                active: row.querySelector(`#active${rider.phone}`).value === 'true',
+                                active: row.querySelector(`#active_selected${rider.phone}`).value === 'true',
                                 password: row.querySelector(`#password${rider.phone}`).innerText,
                                 phone: row.querySelector(`#phone${rider.phone}`).innerText,
                                 unpaid: row.querySelector(`#unpaid${rider.phone}`).innerText,

@@ -120,7 +120,7 @@ function fetchlogin_wadelys(page = currentPage) {
                         // Populate editable fields
                         const activeCell = row.querySelector(`#active${login_wadely.phone}`);
                         activeCell.innerHTML = `
-                            <select style="width:100%" id="active-select">
+                            <select style="width:100%" id="active_select${login_wadely.phone}">
                                 <option value="true" ${login_wadely.active ? 'selected' : ''}>True</option>
                                 <option value="false" ${!login_wadely.active ? 'selected' : ''}>False</option>
                             </select>`;
@@ -148,7 +148,7 @@ function fetchlogin_wadelys(page = currentPage) {
                             // Gather updated values
                             const updatedlogin_wadely = {
                                 name: row.querySelector(`#name${login_wadely.phone}`).innerText,
-                                active: row.querySelector(`#active${login_wadely.phone}`).value === 'true',
+                                active: row.querySelector(`#active_select${login_wadely.phone}`).value === 'true',
                                 password: row.querySelector(`#password${login_wadely.phone}`).innerText,
                                 phone: row.querySelector(`#phone${login_wadely.phone}`).innerText,
                                 total_orders: parseFloat(row.querySelector(`#total_orders${login_wadely.phone}`).innerText),
@@ -405,7 +405,7 @@ searchInput.addEventListener('input', function () {
                         // Populate editable fields
                         const activeCell = row.querySelector(`#active${login_wadely.phone}`);
                         activeCell.innerHTML = `
-                            <select style="width:100%" id="active-select">
+                            <select style="width:100%" id="active_select${login_wadely.phone}">
                                 <option value="true" ${login_wadely.active ? 'selected' : ''}>True</option>
                                 <option value="false" ${!login_wadely.active ? 'selected' : ''}>False</option>
                             </select>`;
@@ -433,7 +433,7 @@ searchInput.addEventListener('input', function () {
                             // Gather updated values
                             const updatedlogin_wadely = {
                                 name: row.querySelector(`#name${login_wadely.phone}`).innerText,
-                                active: row.querySelector(`#active${login_wadely.phone}`).value === 'true',
+                                active: row.querySelector(`#active_select${login_wadely.phone}`).value === 'true',
                                 password: row.querySelector(`#password${login_wadely.phone}`).innerText,
                                 phone: row.querySelector(`#phone${login_wadely.phone}`).innerText,
                                 total_orders: parseFloat(row.querySelector(`#total_orders${login_wadely.phone}`).innerText),
