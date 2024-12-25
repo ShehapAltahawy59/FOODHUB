@@ -151,8 +151,10 @@ def login():
 
         # Redirect to a different page after successful login
         return jsonify({'redirect_url': url_for('home')}), 200
-
-    return render_template('E_commerc_login_page.html')
+    if current_user.is_authenticated and (current_user.is_admin or current_user.is_sub_admin):
+        return redirect(url_for('Admin_Dashboard'))
+    else:
+        return render_template('E_commerc_login_page.html')
 
 
 
