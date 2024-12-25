@@ -109,7 +109,7 @@ def load_user(user_id):
         user_doc = query[0]
         user_data = user_doc.to_dict()
         
-        return User(user_id, user_data['email'], user_data['username'],user_data['profile_img'],user_data['phone'],user_data['addresses'],user_data["is_admin"])
+        return User(user_id, user_data['email'], user_data['username'],user_data['profile_img'],user_data['phone'],user_data['addresses'],user_data["is_admin"],user_data["is_sub_admin"])
     return None
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -122,6 +122,7 @@ def login():
         phone = data.get('phone')
         img = data.get('photoURL')
         uid = data.get('uid')
+        
         # Query Firestore to check if user with the email exists
         users_ref = db.collection('users')
         query = users_ref.where('user_id', '==', uid).limit(1).get()
@@ -137,14 +138,15 @@ def login():
                 'profile_img': img,
                 'user_id': uid,
                 'addresses': [],
-                'is_admin': False
+                'is_admin': False,
+                'is_sub_admin':False,
             })
         
 
         # Log the user in using Flask-Login
         
         
-        user_obj = User(uid, email, name,img,phone,[],False)
+        user_obj = User(uid, email, name,img,phone,[],False,False)
         login_user(user_obj)
 
         # Redirect to a different page after successful login
@@ -163,6 +165,14 @@ def admin_required(f):
         return f(*args, **kwargs)
     return decorated_function
 
+def admin_or_sub_admin_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if not (current_user.is_authenticated and (current_user.is_admin or current_user.is_sub_admin)):
+            flash("You do not have permission to access this page.", "danger")
+            return redirect(url_for('home'))  # Redirect to login or an unauthorized page
+        return f(*args, **kwargs)
+    return decorated_function
 
 @app.route('/logout', methods=['POST'])
 def logout():
@@ -210,13 +220,14 @@ def check_email_exists():
 
 
 @app.route('/Admin_Dashboard')
-@admin_required
+@admin_or_sub_admin_required
 def Admin_Dashboard():
     session.pop('item_cat', None)
     session.pop('item_cat_sub', None)
     return render_template('Admin_DASHBOARD.html',current_user=current_user)
 
 @app.route('/Admin_Dashboard/restaurants',methods=['GET', 'POST'])
+@admin_required
 def Admin_Dashboard_restaurants():
     if request.method == 'POST':
         restaurant_name = request.form['name_en']
@@ -345,7 +356,7 @@ def search_in_categories():
 
 
 ################################################################3
-@admin_required
+admin_or_sub_admin_required
 @app.route('/Admin_Dashboard/riders')
 def Admin_Dashboard_riders():
     categories_ref = db.collection('constants')
@@ -353,7 +364,7 @@ def Admin_Dashboard_riders():
     riders = [category for category in categories ]
     return render_template('Admin_DASHBOARD_riders.html',current_user=current_user,riders=riders[0]['delivery_men'])
 
-@admin_required
+admin_or_sub_admin_required
 @app.route('/add_delivery_men', methods=['GET', 'POST'])
 def add_delivery_men():
     if request.method == 'POST':
@@ -375,7 +386,7 @@ def add_delivery_men():
     return render_template('Admin_DASHBOARD_riders.html')
 
 
-@admin_required
+admin_or_sub_admin_required
 @app.route('/get_riders', methods=['GET'])
 def get_riders():
     # Get the pagination parameters from the request
@@ -407,7 +418,7 @@ def get_riders():
     })
 
 
-@admin_required
+@admin_or_sub_admin_required
 @app.route('/search_in_riders')
 def search_in_riders():
     search_query = request.args.get('search', '').lower()
@@ -705,12 +716,12 @@ def search_in_Coupons():
 
 
 ##################################
-@admin_required
+admin_or_sub_admin_required
 @app.route('/Admin_Dashboard/Delivary_Rates')
 def Admin_Dashboard_Delivary_Rates():
     return render_template('ADMIN_dashboard_Delivary_Rates.html')
 
-@admin_required
+admin_or_sub_admin_required
 @app.route('/Admin_Dashboard/get_Delivary_Rates')
 def Admin_Dashboard_get_Delivary_Rates():
     search_query = request.args.get('search', '').lower()
@@ -734,7 +745,7 @@ def Admin_Dashboard_get_Delivary_Rates():
         'Delivary_Rates': Delivary_Rates,
     })
 
-@admin_required
+admin_or_sub_admin_required
 @app.route('/Admin_Dashboard/update_Delivary_Rate' ,methods=['GET', 'POST'])
 def update_Delivary_Rate():
     data = request.get_json()

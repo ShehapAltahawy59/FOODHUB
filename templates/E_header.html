@@ -27,9 +27,10 @@
         <a href="/profile"><li>Profile</li></a>
         <a href="/orders"><li>My Orders</li></a>
         
-        {% if current_user.is_admin %}  <!-- Check if the user is an admin -->
+        {% if current_user.is_admin or current_user.is_sub_admin %}  <!-- Check if the user is an admin -->
         <a href="/Admin_Dashboard"><li>Admin Dashboard</li></a>  <!-- Admin dashboard link -->
         {% endif %}
+        
         
         <button onclick="logoutUser()"><li>Logout</li></button>
     </ul>
