@@ -33,7 +33,13 @@
                            <div class="style-68">Home</div>
                            <div class="">
                                <div class="style-69"><button class="style-70" tabindex="0" type="button" aria-label="account of current user" aria-controls="menu-appbar" aria-haspopup="true"><img alt="..." src="https://multivendor-admin.enatega.com/static/media/team-4-800x800.99c612eb.jpg" class="style-71" /><span class="style-72"></span></button>
-                                   <p class="style-73">Admin</p>
+                                {% if current_user.is_admin %}
+                                    <p class="style-73">Admin</p>
+                                    {%endif%}
+                                    {% if current_user.is_sub_admin %}
+                                    <p class="style-73">Editor</p>
+                                    {%endif%}
+                                
                                </div>
                            </div>
                        </div>
