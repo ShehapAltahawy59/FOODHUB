@@ -141,10 +141,7 @@ def login():
                 'is_admin': False,
                 'is_sub_admin':False,
             })
-        
-
         # Log the user in using Flask-Login
-        
         
         user_obj = User(uid, email, name,img,phone,[],False,False)
         login_user(user_obj)

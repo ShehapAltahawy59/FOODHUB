@@ -3,35 +3,87 @@ let rowsPerPage = 10;  // Define rows per page
 let totalPages = 1; // Start with 1 to avoid issues before data is loaded
 let totalItems = 0; 
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const itemCatSelect = document.getElementById('item_cat');
     const itemCatSubSelect = document.getElementById('item_cat_sub');
-  
-    itemCatSelect.addEventListener('change', function() {
-      const categoryId = this.value;
-      if (categoryId) {
-        fetch(`/get_subcategories/${categoryId}`)
-          .then(response => response.json())
-          .then(data => {
-            itemCatSubSelect.innerHTML = '<option value="">Select Subcategory</option>';
-            data.subcategories.forEach(subcat => {
-              const option = document.createElement('option');
-              option.value = subcat.id;
-              option.textContent = subcat.name_ar;
-              itemCatSubSelect.appendChild(option);
-            });
-          })
-          .catch(error => console.error('Error fetching subcategories:', error));
-      } else {
-        itemCatSubSelect.innerHTML = '<option value="">Select Subcategory</option>';
-      }
-    });
-  
-    // Populate subcategories if already selected
-    if (itemCatSelect.value) {
-      itemCatSelect.dispatchEvent(new Event('change'));
+    const selectedRestaurantKey = 'selectedRestaurant';
+    const selectedCategoryKey = 'selectedCategory';
+
+    // Load saved selections from local storage
+    const savedRestaurant = localStorage.getItem(selectedRestaurantKey);
+    const savedCategory = localStorage.getItem(selectedCategoryKey);
+
+    if (savedRestaurant) {
+        console.log(savedRestaurant);
+        itemCatSelect.value = savedRestaurant;
+        fetch(`/get_subcategories/${savedRestaurant}`)
+            .then(response => response.json())
+            .then(data => {
+                console.log('Subcategories fetched:', data);
+                itemCatSubSelect.innerHTML = '<option value="">Select Subcategory</option>';
+                if (data.subcategories && data.subcategories.length > 0) {
+                    data.subcategories.forEach(subcat => {
+                        const option = document.createElement('option');
+                        option.value = subcat.id;
+                        option.textContent = subcat.name_ar;
+                        itemCatSubSelect.appendChild(option);
+                    });
+                    // Set the saved subcategory if it exists
+                    if (savedCategory) {
+                        console.log(savedCategory);
+                        itemCatSubSelect.value = savedCategory;
+                    }
+                } else {
+                    console.warn('No subcategories found.');
+                }
+            })
+            .catch(error => console.error('Error fetching subcategories:', error));
     }
-  });
+
+    // Save the selected restaurant to local storage
+    itemCatSelect.addEventListener('change', function () {
+        const categoryId = this.value;
+        if (categoryId) {
+            localStorage.setItem(selectedRestaurantKey, categoryId); // Save to local storage
+            fetch(`/get_subcategories/${categoryId}`)
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Subcategories fetched:', data);
+                    itemCatSubSelect.innerHTML = '<option value="">Select Subcategory</option>';
+                    if (data.subcategories && data.subcategories.length > 0) {
+                        data.subcategories.forEach(subcat => {
+                            const option = document.createElement('option');
+                            option.value = subcat.id;
+                            option.textContent = subcat.name_ar;
+                            itemCatSubSelect.appendChild(option);
+                        });
+                        // Set the saved subcategory if it exists
+                        if (savedCategory) {
+                            itemCatSubSelect.value = savedCategory;
+                        }
+                    } else {
+                        console.warn('No subcategories found.');
+                    }
+                })
+                .catch(error => console.error('Error fetching subcategories:', error));
+        } else {
+            localStorage.removeItem(selectedRestaurantKey); // Remove from local storage if no selection
+            itemCatSubSelect.innerHTML = '<option value="">Select Subcategory</option>';
+        }
+    });
+
+    // Save the selected subcategory to local storage
+    itemCatSubSelect.addEventListener('change', function () {
+        const subcategoryId = this.value;
+        if (subcategoryId) {
+            localStorage.setItem(selectedCategoryKey, subcategoryId); // Save to local storage
+        } else {
+            localStorage.removeItem(selectedCategoryKey); // Remove from local storage if no selection
+        }
+    });
+});
+
+
   
   
 
